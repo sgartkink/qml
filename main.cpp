@@ -2,10 +2,10 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "playersmodel.h"
+#include "player/playersmodel.h"
 #include "playerslist.h"
 
-#include "sortfilterplayers.h"
+#include "player/sortfilterplayers.h"
 
 #include "eventsmodel.h"
 #include "eventslist.h"

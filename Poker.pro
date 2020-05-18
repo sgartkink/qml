@@ -13,15 +13,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    eventslist.cpp \
-    eventslist.cpp \
-    eventslist.cpp \
-    player/playerslist.cpp \
-    player/playersmodel.cpp \
     player/sortfilterplayers.cpp \
     eventslist.cpp \
     eventsmodel.cpp \
-    main.cpp
+    main.cpp \
+    player/playersmodel.cpp \
+    player/playerslist.cpp
 
 RESOURCES += qml.qrc
 
@@ -38,10 +35,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     eventslist.h \
-    eventslist.h \
-    eventslist.h \
-    player/playerslist.h \
-    player/playersmodel.h \
-    player/sortfilterplayers.h \
-    eventslist.h \
     eventsmodel.h \
+    player/sortfilterplayers.h \
+    player/playersmodel.h \
+    player/playerslist.h
