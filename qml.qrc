@@ -1,10 +1,18 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>PlayersList.qml</file>
-        <file>TopBar.qml</file>
-        <file>AddNewPlayer.qml</file>
-        <file>InfoAboutPlayer.qml</file>
-        <file>EventsList.qml</file>
+        <file>leaderboard/Leaderboard.qml</file>
+        <file>leaderboard/PlayersList.qml</file>
+        <file>leaderboard/TopBarPlayers.qml</file>
+        <file>popups/PopupAddCompetition.qml</file>
+        <file>popups/PopupAddPlayer.qml</file>
+        <file>popups/PopupCompetitionInfo.qml</file>
+        <file>popups/PopupPlayerInfo.qml</file>
+        <file>competition_calendar/CalendarAddCompetition.qml</file>
+        <file>competition_calendar/CompetitionCalendar.qml</file>
+        <file>competition_calendar/CompetitionsList.qml</file>
+        <file>competition_calendar/TopBarCompetitions.qml</file>
+        <file>leaderboard/TopBarPlayerInfo.qml</file>
+        <file>competition_calendar/TopBarCompetitionInfo.qml</file>
     </qresource>
 </RCC>

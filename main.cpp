@@ -1,14 +1,14 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QSortFilterProxyModel>
 
 #include "player/playersmodel.h"
-#include "playerslist.h"
-
+#include "player/playerslist.h"
 #include "player/sortfilterplayers.h"
 
-#include "eventsmodel.h"
-#include "eventslist.h"
+#include "competition/competitionsmodel.h"
+#include "competition/competitionslist.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,13 +17,14 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
-    PlayersModel * playersModel = new PlayersModel;
-    SortFilterPlayers * sortFilterPlayers = new SortFilterPlayers;
-    sortFilterPlayers->setSourceModel(qobject_cast<QAbstractListModel *>(playersModel));
+    PlayersModel playersModel;
+//    QSortFilterProxyModel * sortFilterPlayers = new QSortFilterProxyModel();
+    SortFilterPlayers sortFilterPlayers;
+    sortFilterPlayers.setSourceModel(&playersModel);
 //    sortFilterPlayers->setSortRole(PlayersModel::WinsRole);
 //    sortFilterPlayers->setDynamicSortFilter(true);
 //    sortFilterPlayers->sort(0, Qt::AscendingOrder);
-    engine.rootContext()->setContextProperty(QStringLiteral("sortFilterPlayers"), sortFilterPlayers);
+    engine.rootContext()->setContextProperty(QStringLiteral("playersModel"), &playersModel);
 
     qmlRegisterType<PlayersModel>("PlayersModel", 1, 0, "PlayersModel");
     qmlRegisterUncreatableType<PlayersList>("PlayersList", 1, 0, "PlayersList", QStringLiteral("Error"));
@@ -31,10 +32,10 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("playersList"), &playersList);
     qmlRegisterType<SortFilterPlayers>("SortFilterPlayers", 1, 0, "SortFilterPlayers");
 
-    qmlRegisterType<EventsModel>("EventsModel", 1, 0, "EventsModel");
-    qmlRegisterUncreatableType<EventsList>("EventsList", 1, 0, "EventsList", QStringLiteral("Error"));
-    EventsList eventsList;
-    engine.rootContext()->setContextProperty(QStringLiteral("eventsList"), &eventsList);
+    qmlRegisterType<CompetitionsModel>("CompetitionsModel", 1, 0, "CompetitionsModel");
+    qmlRegisterUncreatableType<CompetitionsList>("CompetitionsList", 1, 0, "CompetitionsList", QStringLiteral("Error"));
+    CompetitionsList competitionsList;
+    engine.rootContext()->setContextProperty(QStringLiteral("competitionsList"), &competitionsList);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

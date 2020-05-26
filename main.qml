@@ -1,79 +1,49 @@
 import QtQuick 2.11
 import QtQuick.Window 2.11
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
-import QtQuick.Dialogs 1.1
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 
 Window {
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
+    color: "black"
 
-    StackLayout {
-        id: layout
-        currentIndex: 0
+    TabView {
+        id: tabView
         anchors.fill: parent
-        implicitHeight: parent.height
-        implicitWidth: parent.width
-
-        Column {
-            height: parent.height
-            width: parent.width
-
-            Row {
-                width: parent.width
-                height: parent.height*0.05
-                TopBar {
-                    id: topBar
-                }
-            }
-
-            Row {
-                width: parent.width
-                height: parent.height*0.85
-                PlayersList {
-                    id: qmlPlayersList
-                }
-            }
-
-            Row {
-                width: parent.width
-                height: parent.height*0.1
-                Button {
-                    text: qsTr("Add new player")
-                    onClicked:  {
-                        addNewPlayerLoader.source = "AddNewPlayer.qml"
-                        layout.currentIndex = 1
-                    }
-                }
-
-                ToolSeparator {}
-
-                Button {
-                    text: qsTr("Show events")
-                    onClicked: {
-                        qmlEventsList.startTimer()
-                        layout.currentIndex = 3
-                    }
-                }
-            }
+        Tab {
+            title: "Leaderboard"
+            source: "leaderboard/Leaderboard.qml"
+        }
+        Tab {
+            title: "Competition calendar"
+            source: "competition_calendar/CompetitionCalendar.qml"
+        }
+        Tab {
+            title: "Settings"
         }
 
-        Loader {
-            id: addNewPlayerLoader
-        }
-
-        InfoAboutPlayer {
-            id: infoAboutPlayer
-            height: parent.height
-            width: parent.width
-        }
-
-        EventsList {
-            id: qmlEventsList
-            height: parent.height
-            width: parent.width
+        style: TabViewStyle {
+            tab: Rectangle {
+                color: styleData.selected ? "green" : "black"
+                border.color: "gold"
+                implicitWidth: tabView.width/3
+                implicitHeight: text.height + 15
+                radius: 10
+                Text {
+                    id: text
+                    anchors.centerIn: parent
+                    text: styleData.title
+                    color: "gold"
+                    font.bold: styleData.selected ? true : false
+                }
+            }
+            frame: Rectangle {
+                color: "black"
+            }
         }
     }
 }

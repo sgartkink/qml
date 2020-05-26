@@ -3,20 +3,20 @@
 
 #include <QAbstractListModel>
 
-class EventsList;
+class CompetitionsList;
 
-class EventsModel : public QAbstractListModel
+class CompetitionsModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(EventsList *list READ getEventsList WRITE setEventsList)
+    Q_PROPERTY(CompetitionsList *list READ getCompetitionsList WRITE setCompetitionsList)
 
 public:
-    explicit EventsModel(QObject *parent = nullptr);
+    explicit CompetitionsModel(QObject *parent = nullptr);
 
     enum {
         DateRole,
-        WinnerRole,
-        NameRole
+        PrizePoolRole,
+        JackpotRole
     };
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -30,11 +30,11 @@ public:
 
     virtual QHash<int, QByteArray> roleNames() const override;
 
-    EventsList *getEventsList() const;
-    void setEventsList(EventsList *eventsList_);
+    CompetitionsList *getCompetitionsList() const;
+    void setCompetitionsList(CompetitionsList *competitionsList_);
 
 private:
-    EventsList * eventsList;
+    CompetitionsList * competitionsList;
 };
 
 #endif // EVENTSMODEL_H

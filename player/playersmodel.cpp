@@ -1,9 +1,15 @@
 #include "playersmodel.h"
 #include "playerslist.h"
 #include <QtDebug>
+
 PlayersModel::PlayersModel(QObject *parent)
     : QAbstractListModel(parent), playersList(nullptr)
 {
+    sortFilterPlayers = new SortFilterPlayers(this);
+    sortFilterPlayers->setSourceModel(this);
+    sortFilterPlayers->setSortRole(PlayersModel::MoneyWonRole);
+    sortFilterPlayers->setDynamicSortFilter(true);
+    sortFilterPlayers->sort(2);
 }
 
 int PlayersModel::rowCount(const QModelIndex &parent) const
@@ -23,10 +29,12 @@ QVariant PlayersModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case NameRole:
         return QVariant(player.name);
-    case WinsRole:
-        return QVariant(player.wins);
-    case LostRole:
-        return QVariant(player.lost);
+    case MoneyPaidInRole:
+        return QVariant(player.moneyPaidIn);
+    case MoneyWonRole:
+        return QVariant(player.moneyWon);
+    case FrequencyRole:
+        return QVariant(player.competitionsParticipated.size());
     }
     return QVariant();
 }
@@ -41,16 +49,16 @@ bool PlayersModel::setData(const QModelIndex &index, const QVariant &value, int 
     case NameRole:
         player.name = value.toString();
         break;
-    case WinsRole:
-        player.wins = value.toUInt();
+    case MoneyPaidInRole:
+        player.moneyPaidIn = value.toUInt();
         break;
-    case LostRole:
-        player.lost = value.toUInt();
+    case MoneyWonRole:
+        player.moneyWon = value.toInt();
         break;
     }
-qDebug() << "co jes" << value << data(index, role);
+//qDebug() << "co jes" << value << data(index, role);
     if (data(index, role) != value) {
-        qDebug() << "succes";
+//        qDebug() << "succes";
         emit dataChanged(index, index, QVector<int>() << role);
         emit playersListChanged(player);
         return true;
@@ -70,8 +78,9 @@ QHash<int, QByteArray> PlayersModel::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[NameRole] = "name";
-    names[WinsRole] = "wins";
-    names[LostRole] = "lost";
+    names[MoneyPaidInRole] = "moneyPaidIn";
+    names[MoneyWonRole] = "moneyWon";
+    names[FrequencyRole] = "frequency";
     return names;
 }
 

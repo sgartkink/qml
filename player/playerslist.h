@@ -1,25 +1,41 @@
-#ifndef PLAYERSLIST_H
+﻿#ifndef PLAYERSLIST_H
 #define PLAYERSLIST_H
 
 #include <QObject>
 #include <QVector>
 #include <QVariantList>
+#include <QList>
 
-struct Player {
+struct CompetitionsParticipatedInfo
+{
+    int index;
+    unsigned int moneyPaidIn;
+    unsigned int moneyWon;
+
+    friend QVariantList& operator<<(QVariantList& list, const CompetitionsParticipatedInfo& cpi)
+    {
+        return list << cpi.index << cpi.moneyPaidIn << cpi.moneyWon;
+    }
+};
+
+struct Player
+{
     QString name;
-    unsigned int wins;
-    unsigned int lost;
+    unsigned int moneyPaidIn;
+    int moneyWon;
+    QVector<CompetitionsParticipatedInfo> competitionsParticipated;
 
     bool operator==(const Player& rhs) const
     {
-        if (name == rhs.name && wins == rhs.wins && lost == rhs.lost)
+        if (name == rhs.name && moneyPaidIn == rhs.moneyPaidIn && moneyWon == rhs.moneyWon
+                && competitionsParticipated.size() == rhs.competitionsParticipated.size())
             return true;
         return false;
     }
 
     friend QVariantList& operator<<(QVariantList& list, const Player& p)
     {
-        return list << p.name << p.wins << p.lost;
+        return list << p.name << p.moneyPaidIn << p.moneyWon << p.competitionsParticipated.size();
     }
 };
 
@@ -30,12 +46,12 @@ public:
     explicit PlayersList(QObject *parent = nullptr);
 
     QVector<Player> getPlayers() const;
-    Q_INVOKABLE QVariantList getPlayer(int index) const;
-    Q_INVOKABLE void editName(const QVariant &value, const int &index);
-    Q_INVOKABLE void addWin(int index);
-    Q_INVOKABLE void removeWin(int index);
-    Q_INVOKABLE void addLost(int index);
-    Q_INVOKABLE void removeLost(int index);
+    Q_INVOKABLE QVariantList getPlayer(const int & index) const;
+    Q_INVOKABLE QVariantList getPlayersCompetitions(int player, int index) const;
+    Q_INVOKABLE int amoutOfPlayersInCompetition(int index) const;
+    Q_INVOKABLE QVector<int> playersInCompetition(int index) const;
+    Q_INVOKABLE QVector<int> playersIndexesCompetitions(int index) const;
+    Q_INVOKABLE int amoutOfCompetitions(int index) const;
 
     bool setPlayerAt(int index, const Player &player);
 
@@ -49,7 +65,7 @@ signals:
     void playerNameEdited(const int &index, const int &role, const QVariant &value);
 
 public slots:
-    void appendPlayer(QString name = "", unsigned wins = 0, unsigned int lost = 0);
+    void appendPlayer(QString name = "", unsigned int moneyPaidIn = 0, int moneyWon = 0);
     void removePlayer(int index);
 
 private:

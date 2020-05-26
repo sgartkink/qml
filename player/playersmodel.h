@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include "playerslist.h"
+#include "sortfilterplayers.h"
 
 class PlayersModel : public QAbstractListModel
 {
@@ -14,8 +15,9 @@ public:
 
     enum {
         NameRole,
-        WinsRole,
-        LostRole
+        MoneyPaidInRole,
+        MoneyWonRole,
+        FrequencyRole
     };
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -36,6 +38,7 @@ signals:
     void playersListChanged(Player);
 
 private:
+    SortFilterPlayers * sortFilterPlayers;
     PlayersList * playersList;
 };
 

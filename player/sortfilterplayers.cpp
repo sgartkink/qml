@@ -1,6 +1,7 @@
 #include "sortfilterplayers.h"
 
-SortFilterPlayers::SortFilterPlayers()
+SortFilterPlayers::SortFilterPlayers(QObject *parent)
+    : QSortFilterProxyModel(parent)
 {
 
 }

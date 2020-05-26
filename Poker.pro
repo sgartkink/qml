@@ -14,13 +14,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     player/sortfilterplayers.cpp \
-    eventslist.cpp \
-    eventsmodel.cpp \
     main.cpp \
     player/playersmodel.cpp \
-    player/playerslist.cpp
+    player/playerslist.cpp \
+    competition/competitionslist.cpp \
+    competition/competitionsmodel.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    images.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -34,8 +35,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    eventslist.h \
-    eventsmodel.h \
     player/sortfilterplayers.h \
     player/playersmodel.h \
-    player/playerslist.h
+    player/playerslist.h \
+    competition/competitionslist.h \
+    competition/competitionsmodel.h

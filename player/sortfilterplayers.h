@@ -8,7 +8,7 @@ class SortFilterPlayers : public QSortFilterProxyModel
     Q_OBJECT
 
 public:
-    SortFilterPlayers();
+    SortFilterPlayers(QObject *parent = nullptr);
 };
 
 #endif // SORTFILTERPLAYERS_H
