@@ -69,7 +69,10 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: arrowUp.opacity = 1
+                onClicked: {
+                    sortFilterPlayers.toggleOrderSorting(0)
+                    arrowUp.opacity = 1
+                }
             }
         }
         Image {
@@ -90,7 +93,10 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: arrowUp.opacity = 0.3
+                onClicked: {
+                    sortFilterPlayers.toggleOrderSorting(1)
+                    arrowUp.opacity = 0.3
+                }
             }
         }
     }

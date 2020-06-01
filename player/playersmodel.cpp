@@ -5,11 +5,20 @@
 PlayersModel::PlayersModel(QObject *parent)
     : QAbstractListModel(parent), playersList(nullptr)
 {
-    sortFilterPlayers = new SortFilterPlayers(this);
-    sortFilterPlayers->setSourceModel(this);
-    sortFilterPlayers->setSortRole(PlayersModel::MoneyWonRole);
-    sortFilterPlayers->setDynamicSortFilter(true);
-    sortFilterPlayers->sort(2);
+
+}
+
+void PlayersModel::sortData(bool yes)
+{
+    emit layoutAboutToBeChanged();
+
+qDebug() << playersList->getPlayera(0);
+    if (yes)
+    sort(0);
+    else
+        sort(0, Qt::DescendingOrder);
+
+    emit layoutChanged();
 }
 
 int PlayersModel::rowCount(const QModelIndex &parent) const
@@ -118,7 +127,7 @@ void PlayersModel::setPlayersList(PlayersList *playersList_)
             setData(qModelIndex, value, role);
             qDebug() << qModelIndex << role << value;
         });
-    }
+    }    
 
     endResetModel();
 }

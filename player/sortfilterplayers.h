@@ -9,6 +9,10 @@ class SortFilterPlayers : public QSortFilterProxyModel
 
 public:
     SortFilterPlayers(QObject *parent = nullptr);
+
+    Q_INVOKABLE void toggleOrderSorting(bool sorting);
+
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 };
 
 #endif // SORTFILTERPLAYERS_H

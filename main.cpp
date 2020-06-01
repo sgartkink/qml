@@ -18,19 +18,21 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     PlayersModel playersModel;
+    PlayersList playersList;
+    playersModel.setPlayersList(&playersList);
 //    QSortFilterProxyModel * sortFilterPlayers = new QSortFilterProxyModel();
     SortFilterPlayers sortFilterPlayers;
     sortFilterPlayers.setSourceModel(&playersModel);
-//    sortFilterPlayers->setSortRole(PlayersModel::WinsRole);
-//    sortFilterPlayers->setDynamicSortFilter(true);
-//    sortFilterPlayers->sort(0, Qt::AscendingOrder);
+    sortFilterPlayers.setDynamicSortFilter(true);
+    sortFilterPlayers.sort(0, Qt::AscendingOrder);
     engine.rootContext()->setContextProperty(QStringLiteral("playersModel"), &playersModel);
 
     qmlRegisterType<PlayersModel>("PlayersModel", 1, 0, "PlayersModel");
     qmlRegisterUncreatableType<PlayersList>("PlayersList", 1, 0, "PlayersList", QStringLiteral("Error"));
-    PlayersList playersList;
+
     engine.rootContext()->setContextProperty(QStringLiteral("playersList"), &playersList);
     qmlRegisterType<SortFilterPlayers>("SortFilterPlayers", 1, 0, "SortFilterPlayers");
+    engine.rootContext()->setContextProperty(QStringLiteral("sortFilterPlayers"), &sortFilterPlayers);
 
     qmlRegisterType<CompetitionsModel>("CompetitionsModel", 1, 0, "CompetitionsModel");
     qmlRegisterUncreatableType<CompetitionsList>("CompetitionsList", 1, 0, "CompetitionsList", QStringLiteral("Error"));

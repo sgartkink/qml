@@ -20,6 +20,8 @@ public:
         FrequencyRole
     };
 
+    Q_INVOKABLE void sortData(bool yes);
+
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

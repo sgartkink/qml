@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
+import SortFilterPlayers 1.0
 import "../leaderboard/"
 
 Popup {
@@ -105,6 +106,15 @@ Popup {
                 }
 
                 model: playersList.amoutOfCompetitions(indexChoosenPlayer)
+
+                Label {
+                    anchors.fill: parent
+                    horizontalAlignment: Qt.AlignHCenter
+                    verticalAlignment: Qt.AlignVCenter
+                    visible: parent.count == 0
+                    text: qsTr("Nothing to show yet!")
+                    font.bold: true
+                }
 
                 delegate: Rectangle {
                     width: parent.width

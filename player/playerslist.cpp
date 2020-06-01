@@ -41,6 +41,11 @@ QVariantList PlayersList::getPlayer(const int & index) const
     return list;
 }
 
+QString PlayersList::getPlayera(const int &index)
+{
+    return players[index].name;
+}
+
 QVariantList PlayersList::getPlayersCompetitions(int player, int index) const
 {
     QVariantList list;

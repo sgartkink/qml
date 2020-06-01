@@ -18,14 +18,31 @@ Item {
         id: list
         anchors.fill: parent
 
-//        model: SortFilterPlayers {}
-
-        model: PlayersModel {
-            list: playersList
-//            player: playersList
+        Label {
+            anchors.fill: parent
+            horizontalAlignment: Qt.AlignHCenter
+            verticalAlignment: Qt.AlignVCenter
+            visible: parent.count == 0
+            text: qsTr("Nothing to show yet!")
+            font.bold: true
         }
 
-//        model: playersModel
+
+
+//        model: SortFilterPlayers {}
+
+        model: sortFilterPlayers
+
+//        model: PlayersModel {
+//            list: playersList
+//        }
+
+//        Component.onCompleted: {
+//            sortFilterPlayers.setSourceModelFromQML(model)
+//            model: sortFilterPlayers
+//        }
+
+//        model: PlayersModel
 
         delegate: Rectangle {
             width: parent.width

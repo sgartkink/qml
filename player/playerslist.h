@@ -47,6 +47,7 @@ public:
 
     QVector<Player> getPlayers() const;
     Q_INVOKABLE QVariantList getPlayer(const int & index) const;
+    Q_INVOKABLE QString getPlayera(const int & index);
     Q_INVOKABLE QVariantList getPlayersCompetitions(int player, int index) const;
     Q_INVOKABLE int amoutOfPlayersInCompetition(int index) const;
     Q_INVOKABLE QVector<int> playersInCompetition(int index) const;
