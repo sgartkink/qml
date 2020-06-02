@@ -37,10 +37,51 @@ bool SortFilterPlayers::filterAcceptsRow(int sourceRow, const QModelIndex &sourc
     return true;
 }
 
+void SortFilterPlayers::toggleSortInCompetitionPopup()
+{
+    sortInCompetitionPopup = !sortInCompetitionPopup;
+}
+
 bool SortFilterPlayers::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    QVariant leftData = sourceModel()->data(left, PlayersModel::CompetitionsParticipatedMoneyWonRole);
-    QVariant rightData = sourceModel()->data(right, PlayersModel::CompetitionsParticipatedMoneyWonRole);
+    if (sortInCompetitionPopup)
+    {
+        QVariantList listLeftIndexes = sourceModel()->data(left, PlayersModel::CompetitionsParticipatedIndexesRole).toList();
+        int moneyWonLeft = 0;
+        int i = 0;
+        for (auto it = listLeftIndexes.begin(); it != listLeftIndexes.end(); ++it)
+        {
+            if ((*it).toInt() == competitionIndex)
+            {
+                QVariantList listLeftMoney = sourceModel()->data(left, PlayersModel::CompetitionsParticipatedMoneyWonRole).toList();
+                moneyWonLeft = listLeftMoney[i].toInt();
+                break;
+            }
+            i++;
+        }
 
-    return leftData.toString() < rightData.toString();
+        QVariantList listRightIndexes = sourceModel()->data(right, PlayersModel::CompetitionsParticipatedIndexesRole).toList();
+        int moneyWonRight = 0;
+        i = 0;
+        for (auto it = listRightIndexes.begin(); it != listRightIndexes.end(); ++it)
+        {
+            if ((*it).toInt() == competitionIndex)
+            {
+                QVariantList listRightMoney = sourceModel()->data(right, PlayersModel::CompetitionsParticipatedMoneyWonRole)
+                        .toList();
+                moneyWonRight = listRightMoney[i].toInt();
+                break;
+            }
+            i++;
+        }
+
+        return moneyWonLeft < moneyWonRight;
+    }
+    else
+    {
+        QVariant leftData = sourceModel()->data(left, PlayersModel::MoneyWonRole);
+        QVariant rightData = sourceModel()->data(right, PlayersModel::MoneyWonRole);
+
+        return leftData.toInt() < rightData.toInt();
+    }
 }

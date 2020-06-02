@@ -5,7 +5,7 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
 {
     CompetitionsParticipatedInfo cPI { 0, 2000, 5000 };
     CompetitionsParticipatedInfo cPI2 { 1, 3000, 50 };
-    QVector<CompetitionsParticipatedInfo> vectorOfCompetitions { cPI, cPI2 };
+    QVector<CompetitionsParticipatedInfo> vectorOfCompetitions { cPI/*, cPI2*/ };
     unsigned int moneyPaidIn = 0;
     int moneyWon = 0;
     for (auto it = vectorOfCompetitions.begin(); it != vectorOfCompetitions.end(); ++it)

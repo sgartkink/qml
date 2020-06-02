@@ -8,7 +8,14 @@ Popup {
     margins: 20
     opacity: 0.7
 
-    onClosed: sortFilterPlayers.setFilterCompetitionIndex(-1)
+    onOpened: {
+        sortFilterPlayers.toggleSortInCompetitionPopup()
+    }
+
+    onClosed: {
+        sortFilterPlayers.toggleSortInCompetitionPopup()
+        sortFilterPlayers.setFilterCompetitionIndex(-1)
+    }
 
     background: Rectangle {
         anchors.fill: parent
