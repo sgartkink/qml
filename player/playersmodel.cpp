@@ -121,7 +121,6 @@ void PlayersModel::setPlayersList(PlayersList *playersList_)
         connect(playersList, &PlayersList::playerNameEdited, this, [=](int modelIndex, int role, QVariant value) {
             QModelIndex qModelIndex = index(modelIndex);
             setData(qModelIndex, value, role);
-            qDebug() << qModelIndex << role << value;
         });
     }    
 

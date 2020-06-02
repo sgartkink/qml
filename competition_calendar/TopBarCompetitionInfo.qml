@@ -54,7 +54,7 @@ Item {
             id: arrowUp
             width: 30
             height: 10
-            opacity: 1
+            opacity: 0.3
             anchors {
                 left: tMoneyWon.right
                 verticalCenter: parent.verticalCenter
@@ -69,7 +69,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    sortFilterPlayers.setOrderSorting(0)
+                    sortFilterCompetition.setOrderSorting(0)
                     arrowUp.opacity = 1
                 }
             }
@@ -93,7 +93,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    sortFilterPlayers.setOrderSorting(1)
+                    sortFilterCompetition.setOrderSorting(1)
                     arrowUp.opacity = 0.3
                 }
             }

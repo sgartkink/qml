@@ -91,7 +91,7 @@ Item {
                 hoverEnabled: true
                 onClicked: {
                     competitionsListMain.indexChoosenCompetition = index
-                    sortFilterPlayers.setFilterCompetitionIndex(index)
+                    sortFilterCompetition.setFilterCompetitionIndex(index)
                     popupLoader.active = true
                 }
             }

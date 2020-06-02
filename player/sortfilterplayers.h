@@ -10,16 +10,9 @@ class SortFilterPlayers : public QSortFilterProxyModel
 public:
     SortFilterPlayers(QObject *parent = nullptr);
 
-    Q_INVOKABLE void setOrderSorting(bool sorting);
-    Q_INVOKABLE void setFilterCompetitionIndex(int index);
-    Q_INVOKABLE bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
-    Q_INVOKABLE void toggleSortInCompetitionPopup();
+    Q_INVOKABLE void setOrderSorting(Qt::SortOrder sortOrder);
 
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
-
-private:
-    int competitionIndex = -1;
-    bool sortInCompetitionPopup = false;
 };
 
 #endif // SORTFILTERPLAYERS_H

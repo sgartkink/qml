@@ -9,6 +9,7 @@
 
 #include "competition/competitionsmodel.h"
 #include "competition/competitionslist.h"
+#include "competition/sortfiltercompetition.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,11 +27,17 @@ int main(int argc, char *argv[])
     sortFilterPlayers.setDynamicSortFilter(true);
     sortFilterPlayers.sort(0, Qt::AscendingOrder);
 
+    SortFilterCompetition sortFilterCompetition;
+    sortFilterCompetition.setSourceModel(&playersModel);
+    sortFilterCompetition.setDynamicSortFilter(true);
+    sortFilterPlayers.sort(0, Qt::AscendingOrder);
+
     qmlRegisterUncreatableType<PlayersList>("PlayersList", 1, 0, "PlayersList", QStringLiteral("Error"));
 
     engine.rootContext()->setContextProperty(QStringLiteral("playersList"), &playersList);
     qmlRegisterType<SortFilterPlayers>("SortFilterPlayers", 1, 0, "SortFilterPlayers");
     engine.rootContext()->setContextProperty(QStringLiteral("sortFilterPlayers"), &sortFilterPlayers);
+    engine.rootContext()->setContextProperty(QStringLiteral("sortFilterCompetition"), &sortFilterCompetition);
 
     qmlRegisterType<CompetitionsModel>("CompetitionsModel", 1, 0, "CompetitionsModel");
     qmlRegisterUncreatableType<CompetitionsList>("CompetitionsList", 1, 0, "CompetitionsList", QStringLiteral("Error"));

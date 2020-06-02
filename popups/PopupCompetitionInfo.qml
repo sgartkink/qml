@@ -9,15 +9,11 @@ Popup {
     margins: 20
     opacity: 0.7
 
-    Component.onCompleted: open()
-
-    onOpened: {
-        sortFilterPlayers.toggleSortInCompetitionPopup()
+    Component.onCompleted: {
+        open()
     }
 
     onClosed: {
-        sortFilterPlayers.toggleSortInCompetitionPopup()
-        sortFilterPlayers.setFilterCompetitionIndex(-1)
         popupLoader.active = false
     }
 
@@ -96,7 +92,7 @@ Popup {
                     bottom: parent.bottom
                 }
 
-                model: sortFilterPlayers
+                model: sortFilterCompetition
 
                 delegate: Rectangle {
                     width: parent.width
@@ -110,7 +106,7 @@ Popup {
                         Text {
                             id: list_tName
                             anchors.centerIn: parent
-                            text: "ASd"
+                            text: model.name
                         }
                     }
 
