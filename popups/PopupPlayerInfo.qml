@@ -129,7 +129,7 @@ Popup {
                             id: list_tDate
                             anchors.centerIn: parent
                             readonly property date competitionDate: competitionsList.
-                            getCompetitionDate(playersList.getPlayersCompetitions(indexChoosenPlayer, index)[0])
+                            getCompetitionDate(playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[0])
 
                             text: competitionDate.getDate() + "/" + (competitionDate.getMonth()+1 < 10 ? "0" : "")
                                   + (competitionDate.getMonth()+1) + "/" +  competitionDate.getFullYear()
@@ -147,7 +147,7 @@ Popup {
                         Text {
                             id: list_tMoneyPaidIn
                             anchors.centerIn: parent
-                            text: playersList.getPlayersCompetitions(indexChoosenPlayer, index)[1]
+                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[1]
                         }
                     }
 
@@ -160,7 +160,7 @@ Popup {
                         Text {
                             id: list_tMoneyWon
                             anchors.centerIn: parent
-                            text: playersList.getPlayersCompetitions(indexChoosenPlayer, index)[2]
+                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[2]
                         }
                     }
                 }

@@ -23,6 +23,7 @@ struct Player
     QString name;
     unsigned int moneyPaidIn;
     int moneyWon;
+    int number;
     QVector<CompetitionsParticipatedInfo> competitionsParticipated;
 
     bool operator==(const Player& rhs) const
@@ -37,6 +38,30 @@ struct Player
     {
         return list << p.name << p.moneyPaidIn << p.moneyWon << p.competitionsParticipated.size();
     }
+
+    QVariant getCompetitionsIndexesAsVariant() const
+    {
+        QList<QVariant> list;
+        for (auto it = competitionsParticipated.begin(); it != competitionsParticipated.end(); ++it)
+        {
+            QVariant variant((*it).index);
+            list.append(variant);
+        }
+        QVariant variant(list);
+        return variant;
+    }
+
+    QVariant getCompetitionsMoneyWonAsVariant() const
+    {
+        QList<QVariant> list;
+        for (auto it = competitionsParticipated.begin(); it != competitionsParticipated.end(); ++it)
+        {
+            QVariant variant((*it).moneyWon);
+            list.append(variant);
+        }
+        QVariant variant(list);
+        return variant;
+    }
 };
 
 class PlayersList : public QObject
@@ -47,11 +72,7 @@ public:
 
     QVector<Player> getPlayers() const;
     Q_INVOKABLE QVariantList getPlayer(const int & index) const;
-    Q_INVOKABLE QString getPlayera(const int & index);
-    Q_INVOKABLE QVariantList getPlayersCompetitions(int player, int index) const;
-    Q_INVOKABLE int amoutOfPlayersInCompetition(int index) const;
-    Q_INVOKABLE QVector<int> playersInCompetition(int index) const;
-    Q_INVOKABLE QVector<int> playersIndexesCompetitions(int index) const;
+    Q_INVOKABLE QVariantList getPlayerCompetitionsInfo(int player, int index) const;
     Q_INVOKABLE int amoutOfCompetitions(int index) const;
 
     bool setPlayerAt(int index, const Player &player);

@@ -50,5 +50,53 @@ Item {
             text: qsTr("Money won (zł)")
             anchors.centerIn: parent
         }
+        Image {
+            id: arrowUp
+            width: 30
+            height: 10
+            opacity: 1
+            anchors {
+                left: tMoneyWon.right
+                verticalCenter: parent.verticalCenter
+            }
+            transform: Rotation {
+                angle: 90
+                origin.x: arrowUp.width/2
+                origin.y: arrowUp.height/2
+            }
+            source: "../images/arrow.png"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    sortFilterPlayers.setOrderSorting(0)
+                    arrowUp.opacity = 1
+                }
+            }
+        }
+        Image {
+            id: arrowDown
+            width: 30
+            height: 10
+            opacity: arrowUp.opacity === 1 ? 0.3 : 1
+            anchors {
+                left: arrowUp.right
+                verticalCenter: parent.verticalCenter
+            }
+            transform: Rotation {
+                angle: 270
+                origin.x: arrowDown.width/2
+                origin.y: arrowDown.height/2
+            }
+            source: "../images/arrow.png"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    sortFilterPlayers.setOrderSorting(1)
+                    arrowUp.opacity = 0.3
+                }
+            }
+        }
     }
 }

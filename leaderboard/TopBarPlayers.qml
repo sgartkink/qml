@@ -70,7 +70,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    sortFilterPlayers.toggleOrderSorting(0)
+                    sortFilterPlayers.setOrderSorting(0)
                     arrowUp.opacity = 1
                 }
             }
@@ -94,7 +94,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    sortFilterPlayers.toggleOrderSorting(1)
+                    sortFilterPlayers.setOrderSorting(1)
                     arrowUp.opacity = 0.3
                 }
             }

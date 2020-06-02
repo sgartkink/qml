@@ -8,19 +8,6 @@ PlayersModel::PlayersModel(QObject *parent)
 
 }
 
-void PlayersModel::sortData(bool yes)
-{
-    emit layoutAboutToBeChanged();
-
-qDebug() << playersList->getPlayera(0);
-    if (yes)
-    sort(0);
-    else
-        sort(0, Qt::DescendingOrder);
-
-    emit layoutChanged();
-}
-
 int PlayersModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid() || !playersList)
@@ -42,8 +29,14 @@ QVariant PlayersModel::data(const QModelIndex &index, int role) const
         return QVariant(player.moneyPaidIn);
     case MoneyWonRole:
         return QVariant(player.moneyWon);
+    case NumberRole:
+        return QVariant(player.number);
     case FrequencyRole:
         return QVariant(player.competitionsParticipated.size());
+    case CompetitionsParticipatedIndexesRole:
+        return QVariant(player.getCompetitionsIndexesAsVariant());
+    case CompetitionsParticipatedMoneyWonRole:
+        return QVariant(player.getCompetitionsMoneyWonAsVariant());
     }
     return QVariant();
 }
@@ -64,10 +57,12 @@ bool PlayersModel::setData(const QModelIndex &index, const QVariant &value, int 
     case MoneyWonRole:
         player.moneyWon = value.toInt();
         break;
+    case NumberRole:
+        player.number = playersList->getPlayers().size()-1;
+        break;
     }
-//qDebug() << "co jes" << value << data(index, role);
+
     if (data(index, role) != value) {
-//        qDebug() << "succes";
         emit dataChanged(index, index, QVector<int>() << role);
         emit playersListChanged(player);
         return true;
@@ -89,6 +84,7 @@ QHash<int, QByteArray> PlayersModel::roleNames() const
     names[NameRole] = "name";
     names[MoneyPaidInRole] = "moneyPaidIn";
     names[MoneyWonRole] = "moneyWon";
+    names[NumberRole] = "number";
     names[FrequencyRole] = "frequency";
     return names;
 }

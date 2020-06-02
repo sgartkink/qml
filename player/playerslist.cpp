@@ -13,7 +13,7 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
         moneyPaidIn += (*it).moneyPaidIn;
         moneyWon += (*it).moneyWon;
     }
-    players.append({ "test", moneyPaidIn, moneyWon, vectorOfCompetitions });
+    players.append({ "test", moneyPaidIn, moneyWon, 0, vectorOfCompetitions });
 
     vectorOfCompetitions.clear();
     moneyPaidIn = 0;
@@ -26,7 +26,7 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
         moneyPaidIn += (*it).moneyPaidIn;
         moneyWon += (*it).moneyWon;
     }
-    players.append({ "test2", moneyPaidIn, moneyWon, vectorOfCompetitions });
+    players.append({ "test2", moneyPaidIn, moneyWon, 1, vectorOfCompetitions });
 }
 
 QVector<Player> PlayersList::getPlayers() const
@@ -41,46 +41,16 @@ QVariantList PlayersList::getPlayer(const int & index) const
     return list;
 }
 
-QString PlayersList::getPlayera(const int &index)
-{
-    return players[index].name;
-}
-
-QVariantList PlayersList::getPlayersCompetitions(int player, int index) const
+QVariantList PlayersList::getPlayerCompetitionsInfo(int player, int index) const
 {
     QVariantList list;
-    list << players[player].competitionsParticipated[index];
+    for (auto it = players[player].competitionsParticipated.begin(); it != players[player].competitionsParticipated.end(); ++it)
+        if ((*it).index == index)
+        {
+            list << (*it);
+            break;
+        }
     return list;
-}
-
-QVector<int> PlayersList::playersInCompetition(int index) const
-{
-    QVector<int> playersIndexes;
-    for (int i = 0; i < players.size(); i++)
-        for (auto it = players[i].competitionsParticipated.begin(); it != players[i].competitionsParticipated.end(); ++it)
-            if ((*it).index == index)
-                playersIndexes.append(i);
-    return playersIndexes;
-}
-
-QVector<int> PlayersList::playersIndexesCompetitions(int index) const
-{
-    QVector<int> playersIndexes;
-    for (int i = 0; i < players.size(); i++)
-        for (auto it = players[i].competitionsParticipated.begin(); it != players[i].competitionsParticipated.end(); ++it)
-            if ((*it).index == index)
-                playersIndexes.append((*it).index);
-    return playersIndexes;
-}
-
-int PlayersList::amoutOfPlayersInCompetition(int index) const
-{
-    int sum = 0;
-    for (int i = 0; i < players.size(); i++)
-        for (auto it = players[i].competitionsParticipated.begin(); it != players[i].competitionsParticipated.end(); ++it)
-            if ((*it).index == index)
-                sum++;
-    return sum;
 }
 
 int PlayersList::amoutOfCompetitions(int index) const

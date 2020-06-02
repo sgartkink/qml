@@ -17,10 +17,11 @@ public:
         NameRole,
         MoneyPaidInRole,
         MoneyWonRole,
-        FrequencyRole
+        NumberRole,
+        FrequencyRole,
+        CompetitionsParticipatedIndexesRole,
+        CompetitionsParticipatedMoneyWonRole
     };
-
-    Q_INVOKABLE void sortData(bool yes);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 

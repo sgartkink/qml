@@ -20,14 +20,12 @@ int main(int argc, char *argv[])
     PlayersModel playersModel;
     PlayersList playersList;
     playersModel.setPlayersList(&playersList);
-//    QSortFilterProxyModel * sortFilterPlayers = new QSortFilterProxyModel();
+
     SortFilterPlayers sortFilterPlayers;
     sortFilterPlayers.setSourceModel(&playersModel);
     sortFilterPlayers.setDynamicSortFilter(true);
     sortFilterPlayers.sort(0, Qt::AscendingOrder);
-    engine.rootContext()->setContextProperty(QStringLiteral("playersModel"), &playersModel);
 
-    qmlRegisterType<PlayersModel>("PlayersModel", 1, 0, "PlayersModel");
     qmlRegisterUncreatableType<PlayersList>("PlayersList", 1, 0, "PlayersList", QStringLiteral("Error"));
 
     engine.rootContext()->setContextProperty(QStringLiteral("playersList"), &playersList);

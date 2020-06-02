@@ -8,6 +8,8 @@ Popup {
     margins: 20
     opacity: 0.7
 
+    onClosed: sortFilterPlayers.setFilterCompetitionIndex(-1)
+
     background: Rectangle {
         anchors.fill: parent
         color: "black"
@@ -82,10 +84,8 @@ Popup {
                     right: parent.right
                     bottom: parent.bottom
                 }
-                readonly property var players: playersList.playersInCompetition(indexChoosenCompetition)
-                readonly property var indexes: playersList.playersIndexesCompetitions(indexChoosenCompetition)
 
-                model: playersList.amoutOfPlayersInCompetition(indexChoosenCompetition)
+                model: sortFilterPlayers
 
                 delegate: Rectangle {
                     width: parent.width
@@ -99,7 +99,7 @@ Popup {
                         Text {
                             id: list_tName
                             anchors.centerIn: parent
-                            text: playersList.getPlayer(list.players[index])[0]
+                            text: model.name
                         }
                     }
 
@@ -112,7 +112,7 @@ Popup {
                         Text {
                             id: list_tMoneyPaidIn
                             anchors.centerIn: parent
-                            text: playersList.getPlayersCompetitions(list.players[index], list.indexes[index])[1]
+                            text: playersList.getPlayerCompetitionsInfo(model.number, indexChoosenCompetition)[1]
                         }
                     }
 
@@ -125,7 +125,7 @@ Popup {
                         Text {
                             id: list_tMoneyWon
                             anchors.centerIn: parent
-                            text: playersList.getPlayersCompetitions(list.players[index], list.indexes[index])[2]
+                            text: playersList.getPlayerCompetitionsInfo(model.number, indexChoosenCompetition)[2]
                         }
                     }
                 }

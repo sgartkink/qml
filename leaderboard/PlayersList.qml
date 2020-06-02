@@ -1,6 +1,5 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import PlayersModel 1.0
 import SortFilterPlayers 1.0
 import "../popups"
 
@@ -18,31 +17,7 @@ Item {
         id: list
         anchors.fill: parent
 
-        Label {
-            anchors.fill: parent
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment: Qt.AlignVCenter
-            visible: parent.count == 0
-            text: qsTr("Nothing to show yet!")
-            font.bold: true
-        }
-
-
-
-//        model: SortFilterPlayers {}
-
         model: sortFilterPlayers
-
-//        model: PlayersModel {
-//            list: playersList
-//        }
-
-//        Component.onCompleted: {
-//            sortFilterPlayers.setSourceModelFromQML(model)
-//            model: sortFilterPlayers
-//        }
-
-//        model: PlayersModel
 
         delegate: Rectangle {
             width: parent.width
