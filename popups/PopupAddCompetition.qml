@@ -3,10 +3,15 @@ import QtQuick.Controls 2.4
 import "../competition_calendar"
 
 Popup {
+    id: popup
     y: topBarCompetitionsQML.height
     width: competitionsListQML.width-40
     height: competitionsListQML.height-40
     margins: 20
+
+    Component.onCompleted: open()
+
+    onClosed: popupLoader.active = false
 
     background: Rectangle {
         anchors.fill: parent

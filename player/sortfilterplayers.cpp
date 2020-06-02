@@ -40,6 +40,7 @@ bool SortFilterPlayers::filterAcceptsRow(int sourceRow, const QModelIndex &sourc
 void SortFilterPlayers::toggleSortInCompetitionPopup()
 {
     sortInCompetitionPopup = !sortInCompetitionPopup;
+    qDebug() << "asd";
 }
 
 bool SortFilterPlayers::lessThan(const QModelIndex &left, const QModelIndex &right) const

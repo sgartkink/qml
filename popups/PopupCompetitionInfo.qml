@@ -3,10 +3,13 @@ import QtQuick.Controls 2.4
 import "../competition_calendar/"
 
 Popup {
+    id: popup
     width: parent.width-40
     height: parent.height-40
     margins: 20
     opacity: 0.7
+
+    Component.onCompleted: open()
 
     onOpened: {
         sortFilterPlayers.toggleSortInCompetitionPopup()
@@ -15,6 +18,7 @@ Popup {
     onClosed: {
         sortFilterPlayers.toggleSortInCompetitionPopup()
         sortFilterPlayers.setFilterCompetitionIndex(-1)
+        popupLoader.active = false
     }
 
     background: Rectangle {
@@ -106,7 +110,7 @@ Popup {
                         Text {
                             id: list_tName
                             anchors.centerIn: parent
-                            text: model.name
+                            text: "ASd"
                         }
                     }
 

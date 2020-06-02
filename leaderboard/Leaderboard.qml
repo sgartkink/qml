@@ -16,7 +16,7 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
 
-        onClicked: popup.open()
+        onClicked: popupLoader.active = true
 
         contentItem: Text {
             text: btnAddPlayer.text
@@ -32,5 +32,10 @@ Item {
         }
     }
 
-    PopupAddPlayer { id: popup }
+    Loader {
+        id: popupLoader
+        active: false
+        anchors.fill: parent
+        sourceComponent: PopupAddPlayer {}
+    }
 }

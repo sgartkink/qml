@@ -17,7 +17,7 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
 
-        onClicked: popup.open()
+        onClicked: popupLoader.active = true
 
         contentItem: Text {
             text: btnAddCompetition.text
@@ -33,5 +33,9 @@ Item {
         }
     }
 
-    PopupAddCompetition { id: popup }
+    Loader {
+        id: popupLoader
+        active: false
+        sourceComponent: PopupAddCompetition {}
+    }
 }

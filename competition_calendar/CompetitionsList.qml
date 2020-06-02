@@ -92,11 +92,16 @@ Item {
                 onClicked: {
                     competitionsListMain.indexChoosenCompetition = index
                     sortFilterPlayers.setFilterCompetitionIndex(index)
-                    popup.open()
+                    popupLoader.active = true
                 }
             }
         }
     }
 
-    PopupCompetitionInfo { id: popup }
+    Loader {
+        id: popupLoader
+        anchors.fill: parent
+        active: false
+        sourceComponent: PopupCompetitionInfo {}
+    }
 }

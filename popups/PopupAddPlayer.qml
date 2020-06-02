@@ -2,10 +2,15 @@ import QtQuick 2.11
 import QtQuick.Controls 2.4
 
 Popup {
+    id: popup
     y: topBarPlayersQML.height
     width: playerListQML.width-40
     height: playerListQML.height-40
     margins: 20
+
+    Component.onCompleted: open()
+
+    onClosed: popupLoader.active = false
 
     background: Rectangle {
         anchors.fill: parent

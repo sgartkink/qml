@@ -85,11 +85,16 @@ Item {
                 hoverEnabled: true
                 onClicked: {
                     playersListMain.indexChoosenPlayer = index
-                    popup.open()
+                    popupLoader.active = true
                 }
             }
         }
     }
 
-    PopupPlayerInfo { id: popup }
+    Loader {
+        id: popupLoader
+        active: false
+        anchors.fill: parent
+        sourceComponent: PopupPlayerInfo {}
+    }
 }

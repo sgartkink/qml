@@ -44,6 +44,7 @@ QVariantList PlayersList::getPlayer(const int & index) const
 QVariantList PlayersList::getPlayerCompetitionsInfo(int player, int index) const
 {
     QVariantList list;
+    qDebug() << index << player;
     for (auto it = players[player].competitionsParticipated.begin(); it != players[player].competitionsParticipated.end(); ++it)
         if ((*it).index == index)
         {

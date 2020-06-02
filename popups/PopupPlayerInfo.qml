@@ -4,10 +4,15 @@ import SortFilterPlayers 1.0
 import "../leaderboard/"
 
 Popup {
+    id: popup
     width: parent.width-40
     height: parent.height-40
     margins: 20
     opacity: 0.7
+
+    Component.onCompleted: open()
+
+    onClosed: popupLoader.active = false
 
     background: Rectangle {
         anchors.fill: parent
