@@ -7,14 +7,22 @@ Popup {
     width: parent.width-40
     height: parent.height-40
     margins: 20
-    opacity: 0.7
+    opacity: 0
 
-    Component.onCompleted: {
-        open()
-    }
+    Component.onCompleted: open()
 
-    onClosed: {
-        popupLoader.active = false
+    onClosed: popupLoader.active = false
+
+    onAboutToShow: showAnimation.running = true
+
+    NumberAnimation {
+        id: showAnimation
+        target: popup
+        property: "opacity"
+        to: 1
+        duration: 300
+        running: false
+        easing.type: Easing.InOutQuad
     }
 
     background: Rectangle {

@@ -8,10 +8,23 @@ Popup {
     width: competitionsListQML.width-40
     height: competitionsListQML.height-40
     margins: 20
+    opacity: 0
 
     Component.onCompleted: open()
 
     onClosed: popupLoader.active = false
+
+    onAboutToShow: showAnimation.running = true
+
+    NumberAnimation {
+        id: showAnimation
+        target: popup
+        property: "opacity"
+        to: 1
+        duration: 300
+        running: false
+        easing.type: Easing.InOutQuad
+    }
 
     background: Rectangle {
         anchors.fill: parent

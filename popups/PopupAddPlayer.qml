@@ -7,19 +7,42 @@ Popup {
     width: playerListQML.width-40
     height: playerListQML.height-40
     margins: 20
-
+    opacity: 0
     Component.onCompleted: open()
 
     onClosed: popupLoader.active = false
 
+    onAboutToShow: showAnimation.running = true
+
+    NumberAnimation {
+        id: showAnimation
+        target: popup
+        property: "opacity"
+        to: 1
+        duration: 300
+        running: false
+        easing.type: Easing.InOutQuad
+    }
+
     background: Rectangle {
         anchors.fill: parent
         color: "black"
-        border.color: "gold"
+        border.color: "gold" 
     }
 
     contentItem: Item {
         anchors.fill: parent
+
+        states: [
+            State {
+                when: popup_TName.text === ""
+                PropertyChanges { target: popup_btnAddPlayer; enabled: false; }
+            },
+            State {
+                when: popup_TName.text !== ""
+                PropertyChanges { target: popup_btnAddPlayer; enabled: true; }
+            }
+        ]
 
         Row {
             anchors {
@@ -44,7 +67,6 @@ Popup {
 
         Button {
             id: popup_btnAddPlayer
-            enabled: popup_TName.text === "" ? false : true
             anchors {
                 left: parent.left
                 right: parent.right
