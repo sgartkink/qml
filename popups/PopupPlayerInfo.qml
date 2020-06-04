@@ -136,15 +136,18 @@ Popup {
                 delegate: Rectangle {
                     width: parent.width
                     height: 30
+                    color: mouseArea.containsMouse ? "green" : "black"
 
                     Rectangle {
                         id: list_rDate
                         height: parent.height
                         width: parent.width/3
+                        color: parent.color
 
                         Text {
                             id: list_tDate
                             anchors.centerIn: parent
+                            color: "gold"
                             readonly property date competitionDate: competitionsList.
                             getCompetitionDate(playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[0])
 
@@ -159,11 +162,13 @@ Popup {
                         id: list_rMoneyPaidIn
                         height: parent.height
                         width: parent.width/3
+                        color: parent.color
                         anchors.left: list_rDate.right
 
                         Text {
                             id: list_tMoneyPaidIn
                             anchors.centerIn: parent
+                            color: "gold"
                             text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[1]
                         }
                     }
@@ -172,13 +177,21 @@ Popup {
                         id: list_rMoneyWon
                         height: parent.height
                         width: parent.width/3
+                        color: parent.color
                         anchors.left: list_rMoneyPaidIn.right
 
                         Text {
                             id: list_tMoneyWon
                             anchors.centerIn: parent
+                            color: "gold"
                             text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[2]
                         }
+                    }
+
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
                     }
                 }
             }
