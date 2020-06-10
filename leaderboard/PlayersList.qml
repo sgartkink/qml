@@ -9,7 +9,7 @@ Item {
         top: topBarPlayersQML.bottom
         left: parent.left
         right: parent.right
-        bottom: btnAddPlayer.top
+        bottom: buttonsRow.top
     }
     property int indexChoosenPlayer: 0
 

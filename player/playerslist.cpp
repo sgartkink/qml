@@ -1,6 +1,7 @@
 #include "playerslist.h"
 #include "playersmodel.h"
-#include <QtDebug>
+#include "writereadplayersdata.h"
+
 PlayersList::PlayersList(QObject *parent) : QObject(parent)
 {
     CompetitionsParticipatedInfo cPI { 0, 2000, 5000 };
@@ -27,6 +28,8 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
         moneyWon += (*it).moneyWon;
     }
     players.append({ "test2", moneyPaidIn, moneyWon, 1, vectorOfCompetitions });
+
+    writeReadPlayersData = new WriteReadPlayersData();
 }
 
 QVector<Player> PlayersList::getPlayers() const
@@ -56,6 +59,14 @@ QVariantList PlayersList::getPlayerCompetitionsInfo(int player, int index) const
 int PlayersList::amoutOfCompetitions(int index) const
 {
     return players[index].competitionsParticipated.size();
+}
+
+void PlayersList::saveData()
+{
+    if (writeReadPlayersData->writeToFile(players))
+        emit dataSaved();
+    else
+        emit dataNotSaved();
 }
 
 bool PlayersList::setPlayerAt(int index, const Player &player)

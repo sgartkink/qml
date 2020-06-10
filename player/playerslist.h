@@ -6,6 +6,8 @@
 #include <QVariantList>
 #include <QList>
 
+class WriteReadPlayersData;
+
 struct CompetitionsParticipatedInfo
 {
     int index;
@@ -74,6 +76,7 @@ public:
     Q_INVOKABLE QVariantList getPlayer(const int & index) const;
     Q_INVOKABLE QVariantList getPlayerCompetitionsInfo(int player, int index) const;
     Q_INVOKABLE int amoutOfCompetitions(int index) const;
+    Q_INVOKABLE void saveData();
 
     bool setPlayerAt(int index, const Player &player);
 
@@ -86,12 +89,16 @@ signals:
 
     void playerNameEdited(const int &index, const int &role, const QVariant &value);
 
+    Q_SIGNAL void dataSaved() const;
+    Q_SIGNAL void dataNotSaved() const;
+
 public slots:
     void appendPlayer(QString name = "", unsigned int moneyPaidIn = 0, int moneyWon = 0);
     void removePlayer(int index);
 
 private:
     QVector<Player> players;
+    WriteReadPlayersData * writeReadPlayersData = nullptr;
 };
 
 #endif // PLAYERSLIST_H
