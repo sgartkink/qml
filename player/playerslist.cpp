@@ -4,32 +4,48 @@
 
 PlayersList::PlayersList(QObject *parent) : QObject(parent)
 {
-    CompetitionsParticipatedInfo cPI { 0, 2000, 5000 };
-    CompetitionsParticipatedInfo cPI2 { 1, 3000, 50 };
-    QVector<CompetitionsParticipatedInfo> vectorOfCompetitions { cPI/*, cPI2*/ };
-    unsigned int moneyPaidIn = 0;
-    int moneyWon = 0;
-    for (auto it = vectorOfCompetitions.begin(); it != vectorOfCompetitions.end(); ++it)
-    {
-        moneyPaidIn += (*it).moneyPaidIn;
-        moneyWon += (*it).moneyWon;
-    }
-    players.append({ "test", moneyPaidIn, moneyWon, 0, vectorOfCompetitions });
+//    CompetitionsParticipatedInfo cPI { 0, 2000, 5000 };
+//    CompetitionsParticipatedInfo cPI2 { 1, 3000, 50 };
+//    QVector<CompetitionsParticipatedInfo> vectorOfCompetitions { cPI/*, cPI2*/ };
+//    unsigned int moneyPaidIn = 0;
+//    int moneyWon = 0;
+//    for (auto it = vectorOfCompetitions.begin(); it != vectorOfCompetitions.end(); ++it)
+//    {
+//        moneyPaidIn += (*it).moneyPaidIn;
+//        moneyWon += (*it).moneyWon;
+//    }
+//    players.append({ "test", moneyPaidIn, moneyWon, 0, vectorOfCompetitions });
 
-    vectorOfCompetitions.clear();
-    moneyPaidIn = 0;
-    moneyWon = 0;
-    cPI = { 0, 1000, 4000 };
-    cPI2 = { 1, 4000, 2000 };
-    vectorOfCompetitions = { cPI, cPI2 };
-    for (auto it = vectorOfCompetitions.begin(); it != vectorOfCompetitions.end(); ++it)
-    {
-        moneyPaidIn += (*it).moneyPaidIn;
-        moneyWon += (*it).moneyWon;
-    }
-    players.append({ "test2", moneyPaidIn, moneyWon, 1, vectorOfCompetitions });
+//    vectorOfCompetitions.clear();
+//    moneyPaidIn = 0;
+//    moneyWon = 0;
+//    cPI = { 0, 1000, 4000 };
+//    cPI2 = { 1, 4000, 2000 };
+//    vectorOfCompetitions = { cPI, cPI2 };
+//    for (auto it = vectorOfCompetitions.begin(); it != vectorOfCompetitions.end(); ++it)
+//    {
+//        moneyPaidIn += (*it).moneyPaidIn;
+//        moneyWon += (*it).moneyWon;
+//    }
+//    players.append({ "test2", moneyPaidIn, moneyWon, 1, vectorOfCompetitions });
 
     writeReadPlayersData = new WriteReadPlayersData();
+    players = writeReadPlayersData->readFromFile();
+
+    for (Player & p : players)
+    {
+        unsigned int moneyPaidIn = 0;
+        int moneyWon = 0;
+
+        for (const CompetitionsParticipatedInfo & c : p.competitionsParticipated)
+        {
+            moneyPaidIn += c.moneyPaidIn;
+            moneyWon += c.moneyWon;
+        }
+
+        p.moneyPaidIn = moneyPaidIn;
+        p.moneyWon = moneyWon;
+    }
 }
 
 QVector<Player> PlayersList::getPlayers() const
@@ -90,6 +106,7 @@ void PlayersList::appendPlayer(QString name, unsigned int moneyPaidIn, int money
     player.name = name;
     player.moneyPaidIn = moneyPaidIn;
     player.moneyWon = moneyWon;
+    player.number = players.size();
     players.append(player);
 
     emit postPlayerAppended();

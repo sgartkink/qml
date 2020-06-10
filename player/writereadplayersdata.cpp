@@ -5,6 +5,59 @@ WriteReadPlayersData::WriteReadPlayersData()
 
 }
 
+QVector<Player> WriteReadPlayersData::readFromFile()
+{
+    QFile loadFile(QStringLiteral("save.json"));
+    QVector<Player> players;
+
+    if (!loadFile.open(QIODevice::ReadOnly))
+    {
+        qWarning("Could not open file");
+        return players;
+    }
+    QByteArray saveData = loadFile.readAll();
+
+    QJsonDocument jsonDocument(QJsonDocument::fromJson(saveData));
+    QJsonObject jsonObject = jsonDocument.object();
+    if (!jsonObject.contains("players"))
+        return players;
+    else
+    {
+        QJsonArray jsonPlayersArray = jsonObject["players"].toArray();
+        players.reserve(jsonPlayersArray.size());
+
+        for (int i = 0; i < jsonPlayersArray.size(); i++)
+        {
+            QJsonObject jsonPlayer = jsonPlayersArray[i].toObject();
+            Player p;
+
+            p.name = jsonPlayer["name"].toString();
+            p.number = jsonPlayer["number"].toInt();
+
+            QVector<CompetitionsParticipatedInfo> competitions;
+            QJsonArray jsonCompetitionsArray = jsonPlayer["competitions"].toArray();
+            competitions.reserve(jsonCompetitionsArray.size());
+
+            for (int j = 0; j < jsonCompetitionsArray.size(); j++)
+            {
+                QJsonObject jsonCompetition = jsonCompetitionsArray[j].toObject();
+                CompetitionsParticipatedInfo c;
+
+                c.index = jsonCompetition["index"].toInt();
+                c.moneyPaidIn = static_cast<unsigned int>(jsonCompetition["moneyPaidIn"].toInt());
+                c.moneyWon = jsonCompetition["moneyWon"].toInt();
+
+                competitions.append(c);
+            }
+
+            p.competitionsParticipated = competitions;
+            players.append(p);
+        }
+    }
+
+    return players;
+}
+
 bool WriteReadPlayersData::writeToFile(QVector<Player> &players) const
 {
     QFile saveFile(QStringLiteral("save.json"));
@@ -16,32 +69,30 @@ bool WriteReadPlayersData::writeToFile(QVector<Player> &players) const
     }
 
     QJsonObject jsonObject;
+    QJsonArray jsonPlayersArray;
 
-    QJsonArray jsonPlayers;
     for (const Player & p : players)
     {
-        QJsonObject player;
+        QJsonObject jsonPlayer;
 
-        player["name"] = p.name;
-        player["moneyPaidIn"] = static_cast<int>(p.moneyPaidIn);
-        player["moneyWon"] = p.moneyWon;
-        player["number"] = p.number;
+        jsonPlayer["name"] = p.name;
+        jsonPlayer["number"] = p.number;
 
-        QJsonArray playerCompetitionsArray;
+        QJsonArray jsonCompetitionsArray;
         for (const CompetitionsParticipatedInfo & c : p.competitionsParticipated)
         {
-            QJsonObject playerCompetitionsObject;
+            QJsonObject jsonCompetition;
 
-            playerCompetitionsObject["index"] = c.index;
-            playerCompetitionsObject["moneyPaidIn"] = static_cast<int>(c.moneyPaidIn);
-            playerCompetitionsObject["moneyWon"] = static_cast<int>(c.moneyWon);
+            jsonCompetition["index"] = c.index;
+            jsonCompetition["moneyPaidIn"] = static_cast<int>(c.moneyPaidIn);
+            jsonCompetition["moneyWon"] = c.moneyWon;
 
-            playerCompetitionsArray.append(playerCompetitionsObject);
+            jsonCompetitionsArray.append(jsonCompetition);
         }
-        player["competitions"] = playerCompetitionsArray;
-        jsonPlayers.append(player);
+        jsonPlayer["competitions"] = jsonCompetitionsArray;
+        jsonPlayersArray.append(jsonPlayer);
     }
-    jsonObject["players"] = jsonPlayers;
+    jsonObject["players"] = jsonPlayersArray;
 
     saveFile.write(QJsonDocument(jsonObject).toJson());
     return true;

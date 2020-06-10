@@ -14,11 +14,8 @@ class WriteReadPlayersData
 public:
     WriteReadPlayersData();
 
-    void readFromFile(const QJsonObject &json);
+    QVector<Player> readFromFile();
     bool writeToFile(QVector<Player> & players) const;
-
-signals:
-
 };
 
 #endif // WRITEREADPLAYERDATA_H

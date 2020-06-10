@@ -12,7 +12,7 @@ struct CompetitionsParticipatedInfo
 {
     int index;
     unsigned int moneyPaidIn;
-    unsigned int moneyWon;
+    int moneyWon;
 
     friend QVariantList& operator<<(QVariantList& list, const CompetitionsParticipatedInfo& cpi)
     {
