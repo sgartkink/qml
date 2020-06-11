@@ -35,6 +35,9 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<PlayersList>("PlayersList", 1, 0, "PlayersList", QStringLiteral("Error"));
 
     engine.rootContext()->setContextProperty(QStringLiteral("playersList"), &playersList);
+    qmlRegisterType<SortFilterPlayers>("PlayersModel", 1, 0, "PlayersModel");
+    engine.rootContext()->setContextProperty(QStringLiteral("playersModel"), &playersModel);
+
     qmlRegisterType<SortFilterPlayers>("SortFilterPlayers", 1, 0, "SortFilterPlayers");
     engine.rootContext()->setContextProperty(QStringLiteral("sortFilterPlayers"), &sortFilterPlayers);
     engine.rootContext()->setContextProperty(QStringLiteral("sortFilterCompetition"), &sortFilterCompetition);

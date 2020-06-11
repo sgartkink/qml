@@ -32,8 +32,9 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
     writeReadPlayersData = new WriteReadPlayersData();
     players = writeReadPlayersData->readFromFile();
 
-    for (Player & p : players)
+    for (int i = 0; i < players.size(); i++)
     {
+        Player & p = players[i];
         unsigned int moneyPaidIn = 0;
         int moneyWon = 0;
 
@@ -45,6 +46,7 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
 
         p.moneyPaidIn = moneyPaidIn;
         p.moneyWon = moneyWon;
+        p.number = i;
     }
 }
 

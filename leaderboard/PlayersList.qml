@@ -84,7 +84,7 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked: {
-                    playersListMain.indexChoosenPlayer = index
+                    playersListMain.indexChoosenPlayer = model.number
                     popupLoader.active = true
                 }
             }

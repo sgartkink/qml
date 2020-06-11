@@ -82,6 +82,7 @@ Popup {
         }
 
         Rectangle {
+            id: rPLayersList
             anchors {
                 top: popup_RJackpot.bottom
                 left: parent.left
@@ -97,7 +98,7 @@ Popup {
                     top: topBarCompetitionInfo.bottom
                     left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
+                    bottom: btnAddPlayer.top
                 }
 
                 model: sortFilterCompetition
@@ -156,6 +157,87 @@ Popup {
                         anchors.fill: parent
                         hoverEnabled: true
                     }
+                }
+            }
+
+            Button {
+                id: btnAddPlayer
+                height: 30
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+                text: qsTr("Add player in this competition")
+                onClicked: rectangle.state = "show"
+            }
+
+            Rectangle {
+                id: rectangle
+                anchors.fill: parent
+                color: "green"
+                states: [
+                    State {
+                        name: "hide"
+                        PropertyChanges { target: rectangle; y: 0; z: -1 }
+                    },
+                    State {
+                        name: "show"
+                        PropertyChanges { target: rectangle; y: btnAddPlayer.y; z: 1 }
+                    }
+                ]
+                transitions: [
+                    Transition {
+                        from: "hide"
+                        to: "show"
+                        PropertyAnimation {
+                            target: rectangle
+                            property: "y"
+                            duration: 500
+                        }
+                    },
+                    Transition {
+                        from: "show"
+                        to: "hide"
+                        PropertyAnimation {
+                            target: rectangle
+                            property: "y"
+                            duration: 500
+                        }
+                    }
+                ]
+                state: "hide"
+
+                GridView {
+                    anchors.fill: parent
+                    width: parent.width
+                    model: playersModel
+
+                    delegate: Column {
+                        spacing: 20
+
+                        Rectangle {
+                            width: 200
+                            height: 100
+                            color: "black"
+                            border.color: "gold"
+                            Text {
+                                text: model.name
+                                anchors.centerIn: parent
+                                color: "gold"
+                            }
+                        }
+                    }
+                }
+
+                Button {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                    }
+                    text: "hide"
+                    onClicked: rectangle.state = "hide"
                 }
             }
         }

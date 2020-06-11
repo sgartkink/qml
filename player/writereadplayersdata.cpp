@@ -32,7 +32,6 @@ QVector<Player> WriteReadPlayersData::readFromFile()
             Player p;
 
             p.name = jsonPlayer["name"].toString();
-            p.number = jsonPlayer["number"].toInt();
 
             QVector<CompetitionsParticipatedInfo> competitions;
             QJsonArray jsonCompetitionsArray = jsonPlayer["competitions"].toArray();
@@ -76,7 +75,6 @@ bool WriteReadPlayersData::writeToFile(QVector<Player> &players) const
         QJsonObject jsonPlayer;
 
         jsonPlayer["name"] = p.name;
-        jsonPlayer["number"] = p.number;
 
         QJsonArray jsonCompetitionsArray;
         for (const CompetitionsParticipatedInfo & c : p.competitionsParticipated)
