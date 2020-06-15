@@ -91,8 +91,13 @@ void PlayersList::addCompetitionToPlayer(int playerIndex, int competitionIndex, 
 {
     CompetitionsParticipatedInfo cPI { competitionIndex, moneyPaidIn, moneyWon };
     players[playerIndex].competitionsParticipated.append(cPI);
+    players[playerIndex].moneyWon += moneyWon;
+    players[playerIndex].moneyPaidIn += moneyPaidIn;
     emit playerChanged(playerIndex, PlayersModel::CompetitionsParticipatedIndexesRole);
     emit playerChanged(playerIndex, PlayersModel::CompetitionsParticipatedMoneyWonRole);
+    emit playerChanged(playerIndex, PlayersModel::MoneyWonRole);
+    emit playerChanged(playerIndex, PlayersModel::MoneyPaidInRole);
+    emit playerChanged(playerIndex, PlayersModel::FrequencyRole);
 }
 
 bool PlayersList::setPlayerAt(int index, const Player &player)

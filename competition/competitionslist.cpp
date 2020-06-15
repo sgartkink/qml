@@ -1,4 +1,5 @@
 #include "competitionslist.h"
+#include "competitionsmodel.h"
 
 CompetitionsList::CompetitionsList(QObject *parent) : QObject(parent)
 {
@@ -36,6 +37,12 @@ int CompetitionsList::getCompetitionsAmount() const
 QDateTime CompetitionsList::getCompetitionDate(int index) const
 {
     return competitions[index].date;
+}
+
+void CompetitionsList::addMoneyToCompetition(int competitionIndex, unsigned int moneyPaidIn)
+{
+    competitions[competitionIndex].prizePool += moneyPaidIn;
+    emit competitionChanged(competitionIndex, CompetitionsModel::PrizePoolRole);
 }
 
 QVector<Competition> CompetitionsList::getCompetitions() const

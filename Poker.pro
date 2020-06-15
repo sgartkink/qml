@@ -21,7 +21,9 @@ SOURCES += \
     competition/competitionslist.cpp \
     competition/competitionsmodel.cpp \
     competition/sortfiltercompetition.cpp \
-    player/writereadplayersdata.cpp
+    player/writereadplayersdata.cpp \
+    player/player.cpp \
+    competition/competition.cpp
 
 RESOURCES += qml.qrc \
     images.qrc
@@ -44,4 +46,6 @@ HEADERS += \
     competition/competitionslist.h \
     competition/competitionsmodel.h \
     competition/sortfiltercompetition.h \
-    player/writereadplayersdata.h
+    player/writereadplayersdata.h \
+    player/player.h \
+    competition/competition.h

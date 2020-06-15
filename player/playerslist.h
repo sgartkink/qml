@@ -4,67 +4,10 @@
 #include <QObject>
 #include <QVector>
 #include <QVariantList>
-#include <QList>
+
+#include "player.h"
 
 class WriteReadPlayersData;
-
-struct CompetitionsParticipatedInfo
-{
-    int index;
-    unsigned int moneyPaidIn;
-    int moneyWon;
-
-    friend QVariantList& operator<<(QVariantList& list, const CompetitionsParticipatedInfo& cpi)
-    {
-        return list << cpi.index << cpi.moneyPaidIn << cpi.moneyWon;
-    }
-};
-
-struct Player
-{
-    QString name;
-    unsigned int moneyPaidIn;
-    int moneyWon;
-    int number;
-    QVector<CompetitionsParticipatedInfo> competitionsParticipated;
-
-    bool operator==(const Player& rhs) const
-    {
-        if (name == rhs.name && moneyPaidIn == rhs.moneyPaidIn && moneyWon == rhs.moneyWon
-                && competitionsParticipated.size() == rhs.competitionsParticipated.size())
-            return true;
-        return false;
-    }
-
-    friend QVariantList& operator<<(QVariantList& list, const Player& p)
-    {
-        return list << p.name << p.moneyPaidIn << p.moneyWon << p.competitionsParticipated.size();
-    }
-
-    QVariant getCompetitionsIndexesAsVariant() const
-    {
-        QList<QVariant> list;
-        for (auto it = competitionsParticipated.begin(); it != competitionsParticipated.end(); ++it)
-        {
-            QVariant variant((*it).index);
-            list.append(variant);
-        }
-        QVariant variant(list);
-        return variant;
-    }
-
-    QVariant getCompetitionsMoneyWonAsVariant() const
-    {
-        QList<QVariant> list;
-        for (auto it = competitionsParticipated.begin(); it != competitionsParticipated.end(); ++it)
-        {
-            QVariant variant((*it).moneyWon);
-            list.append(variant);
-        }
-        QVariant variant(list);
-        return variant;
-    }
-};
 
 class PlayersList : public QObject
 {
