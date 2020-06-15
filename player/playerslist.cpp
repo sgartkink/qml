@@ -1,7 +1,7 @@
 #include "playerslist.h"
 #include "playersmodel.h"
 #include "writereadplayersdata.h"
-
+#include <QtDebug>
 PlayersList::PlayersList(QObject *parent) : QObject(parent)
 {
 //    CompetitionsParticipatedInfo cPI { 0, 2000, 5000 };
@@ -85,6 +85,14 @@ void PlayersList::saveData()
         emit dataSaved();
     else
         emit dataNotSaved();
+}
+
+void PlayersList::addCompetitionToPlayer(int playerIndex, int competitionIndex, unsigned int moneyPaidIn, int moneyWon)
+{
+    CompetitionsParticipatedInfo cPI { competitionIndex, moneyPaidIn, moneyWon };
+    players[playerIndex].competitionsParticipated.append(cPI);
+    emit playerChanged(playerIndex, PlayersModel::CompetitionsParticipatedIndexesRole);
+    emit playerChanged(playerIndex, PlayersModel::CompetitionsParticipatedMoneyWonRole);
 }
 
 bool PlayersList::setPlayerAt(int index, const Player &player)

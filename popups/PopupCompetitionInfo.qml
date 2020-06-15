@@ -92,73 +92,7 @@ Popup {
 
             TopBarCompetitionInfo { id: topBarCompetitionInfo }
 
-            ListView {
-                id: list
-                anchors {
-                    top: topBarCompetitionInfo.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottom: btnAddPlayer.top
-                }
-
-                model: sortFilterCompetition
-
-                delegate: Rectangle {
-                    width: parent.width
-                    height: 30
-                    color: mouseArea.containsMouse ? "green" : "black"
-
-                    Rectangle {
-                        id: list_rName
-                        height: parent.height
-                        width: parent.width/3
-                        color: parent.color
-
-                        Text {
-                            id: list_tName
-                            anchors.centerIn: parent
-                            color: "gold"
-                            text: model.name
-                        }
-                    }
-
-                    Rectangle {
-                        id: list_rMoneyPaidIn
-                        height: parent.height
-                        width: parent.width/3
-                        color: parent.color
-                        anchors.left: list_rName.right
-
-                        Text {
-                            id: list_tMoneyPaidIn
-                            anchors.centerIn: parent
-                            color: "gold"
-                            text: playersList.getPlayerCompetitionsInfo(model.number, indexChoosenCompetition)[1]
-                        }
-                    }
-
-                    Rectangle {
-                        id: list_rMoneyWon
-                        height: parent.height
-                        width: parent.width/3
-                        color: parent.color
-                        anchors.left: list_rMoneyPaidIn.right
-
-                        Text {
-                            id: list_tMoneyWon
-                            anchors.centerIn: parent
-                            color: "gold"
-                            text: playersList.getPlayerCompetitionsInfo(model.number, indexChoosenCompetition)[2]
-                        }
-                    }
-
-                    MouseArea {
-                        id: mouseArea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                    }
-                }
-            }
+            ListViewCompetitionInfo {}
 
             Button {
                 id: btnAddPlayer
@@ -174,63 +108,68 @@ Popup {
 
             Rectangle {
                 id: rectangle
-                anchors.fill: parent
+                anchors {
+                    top: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+                z: 1
+
                 color: "green"
                 states: [
                     State {
                         name: "hide"
-                        PropertyChanges { target: rectangle; y: 0; z: -1 }
+                        PropertyChanges { target: rectangle; anchors.top: parent.bottom; visible: false }
                     },
                     State {
                         name: "show"
-                        PropertyChanges { target: rectangle; y: btnAddPlayer.y; z: 1 }
+                        PropertyChanges { target: rectangle; anchors.top: parent.top; visible: true }
                     }
                 ]
-                transitions: [
-                    Transition {
-                        from: "hide"
-                        to: "show"
-                        PropertyAnimation {
-                            target: rectangle
-                            property: "y"
-                            duration: 500
-                        }
-                    },
-                    Transition {
-                        from: "show"
-                        to: "hide"
-                        PropertyAnimation {
-                            target: rectangle
-                            property: "y"
-                            duration: 500
-                        }
-                    }
-                ]
+                transitions: Transition {
+                    AnchorAnimation { duration: 200; easing.type: Easing.Linear }
+                }
                 state: "hide"
 
                 GridView {
-                    anchors.fill: parent
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        right: parent.right
+                    }
+
                     width: parent.width
                     model: playersModel
 
-                    delegate: Column {
-                        spacing: 20
-
+                    delegate: Item {
                         Rectangle {
-                            width: 200
-                            height: 100
+                            implicitWidth: 50
+                            implicitHeight: txt.height*3
                             color: "black"
                             border.color: "gold"
                             Text {
+                                id: txt
                                 text: model.name
                                 anchors.centerIn: parent
                                 color: "gold"
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    popupAddPlayerToCompetition.setProperties(model.name, model.number)
+                                    popupAddPlayerToCompetition.open()
+                                }
                             }
                         }
                     }
                 }
 
+                PopupAddPlayerToCompetition { id: popupAddPlayerToCompetition }
+
                 Button {
+                    id: btnHide
                     anchors {
                         left: parent.left
                         right: parent.right

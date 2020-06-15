@@ -118,9 +118,9 @@ void PlayersModel::setPlayersList(PlayersList *playersList_)
         connect(playersList, &PlayersList::postPlayerRemoved, this, [=](){
             endRemoveRows();
         });
-        connect(playersList, &PlayersList::playerNameEdited, this, [=](int modelIndex, int role, QVariant value) {
+        connect(playersList, &PlayersList::playerChanged, this, [=](int modelIndex, int role) {
             QModelIndex qModelIndex = index(modelIndex);
-            setData(qModelIndex, value, role);
+            emit dataChanged(qModelIndex, qModelIndex, QVector<int>() << role);
         });
     }    
 

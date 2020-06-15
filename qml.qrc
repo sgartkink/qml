@@ -14,5 +14,7 @@
         <file>competition_calendar/TopBarCompetitions.qml</file>
         <file>leaderboard/TopBarPlayerInfo.qml</file>
         <file>competition_calendar/TopBarCompetitionInfo.qml</file>
+        <file>popups/PopupAddPlayerToCompetition.qml</file>
+        <file>competition_calendar/ListViewCompetitionInfo.qml</file>
     </qresource>
 </RCC>
