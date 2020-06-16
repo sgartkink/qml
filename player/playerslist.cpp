@@ -50,7 +50,7 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
     }
 }
 
-QVector<Player> PlayersList::getPlayers() const
+const QVector<Player> &PlayersList::getPlayers() const
 {
     return players;
 }
@@ -111,6 +111,16 @@ bool PlayersList::setPlayerAt(int index, const Player &player)
 
     players[index] = player;
     return true;
+}
+
+unsigned int PlayersList::getPlayersMoneyPaidInCompetition(int &competitionIndex) const
+{
+    unsigned int money = 0;
+    for (int i = 0; i < players.size(); i++)
+        for (int j = 0; j < players[i].competitionsParticipated.size(); j++)
+            if (players[i].competitionsParticipated[j].index == competitionIndex)
+                money += players[i].competitionsParticipated[j].moneyPaidIn;
+    return money;
 }
 
 void PlayersList::appendPlayer(QString name, unsigned int moneyPaidIn, int moneyWon)

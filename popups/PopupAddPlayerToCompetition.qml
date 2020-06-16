@@ -114,6 +114,7 @@ Popup {
                     else
                     {
                         playersList.addCompetitionToPlayer(number, indexChoosenCompetition, tfMoneyPaidIn.text, tfMoneyWon.text)
+                        competitionsList.addMoneyToCompetition(indexChoosenCompetition, tfMoneyPaidIn.text)
                         popupAddPlayerToCompetition.close()
                     }
                 }

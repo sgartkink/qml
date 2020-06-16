@@ -103,7 +103,10 @@ Popup {
                     bottom: parent.bottom
                 }
                 text: qsTr("Add player in this competition")
-                onClicked: rectangle.state = "show"
+                onClicked: {
+                    sortFilterCompetition.setShow(false)
+                    rectangle.state = "show"
+                }
             }
 
             Rectangle {
@@ -140,7 +143,7 @@ Popup {
                     }
 
                     width: parent.width
-                    model: playersModel
+                    model: sortFilterCompetition
 
                     delegate: Item {
                         Rectangle {
@@ -176,7 +179,10 @@ Popup {
                         bottom: parent.bottom
                     }
                     text: "hide"
-                    onClicked: rectangle.state = "hide"
+                    onClicked: {
+                        sortFilterCompetition.setShow(true)
+                        rectangle.state = "hide"
+                    }
                 }
             }
         }

@@ -1,12 +1,16 @@
 #include "competitionslist.h"
 #include "competitionsmodel.h"
 
-CompetitionsList::CompetitionsList(QObject *parent) : QObject(parent)
+CompetitionsList::CompetitionsList(const PlayersList &pL, QObject *parent)
+    : QObject(parent)
 {
     QDateTime time { QDateTime::currentDateTime() };
-    competitions.append({ time, 15000, 5000 });
+    competitions.append({ time, 0, 5000 });
     QDateTime time2 = time.addDays(2);
-    competitions.append({ time2, 4000, 7000 });
+    competitions.append({ time2, 0, 7000 });
+
+    for (int i = 0; i < competitions.size(); i++)
+        competitions[i].prizePool = pL.getPlayersMoneyPaidInCompetition(i);
 }
 
 QVariantList CompetitionsList::getCompetition(int index) const

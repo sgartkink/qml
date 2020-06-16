@@ -8,7 +8,7 @@ class CompetitionsList;
 class CompetitionsModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(CompetitionsList *list READ getCompetitionsList WRITE setCompetitionsList)
+    Q_PROPERTY(CompetitionsList *list READ getCompetitionsList WRITE setCompetitionsList NOTIFY competitionChanged)
 
 public:
     explicit CompetitionsModel(QObject *parent = nullptr);
@@ -32,6 +32,9 @@ public:
 
     CompetitionsList *getCompetitionsList() const;
     void setCompetitionsList(CompetitionsList *competitionsList_);
+
+signals:
+    void competitionChanged();
 
 private:
     CompetitionsList * competitionsList;

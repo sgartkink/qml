@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<CompetitionsModel>("CompetitionsModel", 1, 0, "CompetitionsModel");
     qmlRegisterUncreatableType<CompetitionsList>("CompetitionsList", 1, 0, "CompetitionsList", QStringLiteral("Error"));
-    CompetitionsList competitionsList;
+    CompetitionsList competitionsList { playersList };
     engine.rootContext()->setContextProperty(QStringLiteral("competitionsList"), &competitionsList);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

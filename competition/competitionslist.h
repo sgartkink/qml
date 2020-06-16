@@ -6,12 +6,13 @@
 #include <QVector>
 
 #include "competition.h"
+#include "../player/playerslist.h"
 
 class CompetitionsList : public QObject
 {
     Q_OBJECT
 public:
-    explicit CompetitionsList(QObject *parent = nullptr);
+    explicit CompetitionsList(const PlayersList & pL, QObject *parent = nullptr);
 
     Q_INVOKABLE QVariantList getCompetition(int index) const;
     Q_INVOKABLE void appendCompetition(QDateTime date = QDateTime(), unsigned int prizePool = 0, unsigned int jackpot = 0);

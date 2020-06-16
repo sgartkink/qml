@@ -15,7 +15,7 @@ class PlayersList : public QObject
 public:
     explicit PlayersList(QObject *parent = nullptr);
 
-    QVector<Player> getPlayers() const;
+    const QVector<Player> & getPlayers() const;
     Q_INVOKABLE QVariantList getPlayer(const int & index) const;
     Q_INVOKABLE QVariantList getPlayerCompetitionsInfo(int player, int index) const;
     Q_INVOKABLE int amoutOfCompetitions(int index) const;
@@ -23,6 +23,8 @@ public:
     Q_INVOKABLE void addCompetitionToPlayer(int playerIndex, int competitionIndex, unsigned int moneyPaidIn, int moneyWon);
 
     bool setPlayerAt(int index, const Player &player);
+
+    unsigned int getPlayersMoneyPaidInCompetition(int & competitionIndex) const;
 
 signals:
     void prePlayerAppended();

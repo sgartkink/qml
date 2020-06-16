@@ -106,6 +106,7 @@ void CompetitionsModel::setCompetitionsList(CompetitionsList *competitionsList_)
         connect(competitionsList, &CompetitionsList::competitionChanged, this, [=](int modelIndex, int role) {
             QModelIndex qModelIndex = index(modelIndex);
             emit dataChanged(qModelIndex, qModelIndex, QVector<int>() << role);
+            emit competitionChanged();
         });
     }
 
