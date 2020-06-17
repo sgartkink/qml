@@ -1,6 +1,5 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import SortFilterPlayers 1.0
 import "../leaderboard/"
 
 Popup {
@@ -122,7 +121,7 @@ Popup {
                     bottom: parent.bottom
                 }
 
-                model: playersList.amoutOfCompetitions(indexChoosenPlayer)
+                model: playersList.amoutOfPlayerCompetitions(indexChoosenPlayer)
 
                 Label {
                     anchors.fill: parent

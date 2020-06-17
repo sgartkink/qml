@@ -104,7 +104,7 @@ Popup {
                 }
                 text: qsTr("Add player in this competition")
                 onClicked: {
-                    sortFilterCompetition.setShow(false)
+                    sortFilterCompetition.setShowPlayersWhoIncludeIndex(false)
                     rectangle.state = "show"
                 }
             }
@@ -180,7 +180,7 @@ Popup {
                     }
                     text: "hide"
                     onClicked: {
-                        sortFilterCompetition.setShow(true)
+                        sortFilterCompetition.setShowPlayersWhoIncludeIndex(true)
                         rectangle.state = "hide"
                     }
                 }

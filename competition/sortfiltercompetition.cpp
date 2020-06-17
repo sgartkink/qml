@@ -1,13 +1,13 @@
 #include "sortfiltercompetition.h"
 #include "player/playersmodel.h"
 #include <QtDebug>
-SortFilterCompetition::SortFilterCompetition(QObject *parent)
+SortFilterCompetitions::SortFilterCompetitions(QObject *parent)
     : QSortFilterProxyModel(parent)
 {
 
 }
 
-void SortFilterCompetition::setOrderSorting(Qt::SortOrder sortOrder)
+void SortFilterCompetitions::setOrderSorting(Qt::SortOrder sortOrder)
 {
     if (sortOrder == Qt::AscendingOrder)
         sort(0, Qt::AscendingOrder);
@@ -15,39 +15,37 @@ void SortFilterCompetition::setOrderSorting(Qt::SortOrder sortOrder)
         sort(0, Qt::DescendingOrder);
 }
 
-void SortFilterCompetition::setFilterCompetitionIndex(int index)
+void SortFilterCompetitions::setFilterCompetitionIndex(int index)
 {
     competitionIndex = index;
     invalidateFilter();
 }
 
-void SortFilterCompetition::setShow(bool s)
+void SortFilterCompetitions::setShowPlayersWhoIncludeIndex(bool s)
 {
-    show = s;
+    showPlayersWhoIncludeIndex = s;
     invalidateFilter();
 }
 
-bool SortFilterCompetition::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool SortFilterCompetitions::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
-    QVariantList list = sourceModel()->data(index0, PlayersModel::CompetitionsParticipatedIndexesRole).toList();
-    if (show)
-    {
-        for (auto it = list.begin(); it != list.end(); ++it)
-            if ((*it).toInt() == competitionIndex)
-                return true;
-        return false;
-    }
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+    QVariantList list = sourceModel()->data(index, PlayersModel::CompetitionsParticipatedIndexesRole).toList();
+    if (showPlayersWhoIncludeIndex)
+        return checkIfIndexIsContainedInList(list);
     else
-    {
-        for (auto it = list.begin(); it != list.end(); ++it)
-            if ((*it).toInt() == competitionIndex)
-                return false;
-        return true;
-    }
+        return !checkIfIndexIsContainedInList(list);
 }
 
-bool SortFilterCompetition::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool SortFilterCompetitions::checkIfIndexIsContainedInList(const QVariantList& list) const
+{
+    for (auto it = list.begin(); it != list.end(); ++it)
+        if ((*it).toInt() == competitionIndex)
+            return true;
+    return false;
+}
+
+bool SortFilterCompetitions::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     int moneyWonLeft = calcMoneyWon(left);
     int moneyWonRight = calcMoneyWon(right);
@@ -55,7 +53,7 @@ bool SortFilterCompetition::lessThan(const QModelIndex &left, const QModelIndex 
     return moneyWonLeft < moneyWonRight;
 }
 
-int SortFilterCompetition::calcMoneyWon(const QModelIndex &side) const
+int SortFilterCompetitions::calcMoneyWon(const QModelIndex &side) const
 {
     QVariantList listIndexes = sourceModel()->data(side, PlayersModel::CompetitionsParticipatedIndexesRole).toList();
     int moneyWon = 0;

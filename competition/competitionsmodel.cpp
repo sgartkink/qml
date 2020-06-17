@@ -19,14 +19,14 @@ QVariant CompetitionsModel::data(const QModelIndex &index, int role) const
     if (!index.isValid() || !competitionsList)
         return QVariant();
 
-    const Competition event = competitionsList->getCompetitions().at(index.row());
+    const Competition competition = competitionsList->getCompetitions().at(index.row());
     switch (role) {
     case DateRole:
-        return QVariant(event.date);
+        return QVariant(competition.date);
     case PrizePoolRole:
-        return QVariant(event.prizePool);
+        return QVariant(competition.prizePool);
     case JackpotRole:
-        return QVariant(event.jackpot);
+        return QVariant(competition.jackpot);
     }
 
     return QVariant();
@@ -37,16 +37,16 @@ bool CompetitionsModel::setData(const QModelIndex &index, const QVariant &value,
     if (!competitionsList)
         return false;
 
-    Competition event = competitionsList->getCompetitions().at(index.row());
+    Competition competition = competitionsList->getCompetitions().at(index.row());
     switch (role) {
     case DateRole:
-        event.date = value.toDateTime();
+        competition.date = value.toDateTime();
         break;
     case PrizePoolRole:
-        event.prizePool = value.toUInt();
+        competition.prizePool = value.toUInt();
         break;
     case JackpotRole:
-        event.jackpot = value.toUInt();
+        competition.jackpot = value.toUInt();
         break;
     }
 
@@ -102,11 +102,6 @@ void CompetitionsModel::setCompetitionsList(CompetitionsList *competitionsList_)
         });
         connect(competitionsList, &CompetitionsList::postCompetitionRemoved, this, [=](){
             endRemoveRows();
-        });
-        connect(competitionsList, &CompetitionsList::competitionChanged, this, [=](int modelIndex, int role) {
-            QModelIndex qModelIndex = index(modelIndex);
-            emit dataChanged(qModelIndex, qModelIndex, QVector<int>() << role);
-            emit competitionChanged();
         });
     }
 

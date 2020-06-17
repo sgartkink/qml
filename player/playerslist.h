@@ -15,16 +15,17 @@ class PlayersList : public QObject
 public:
     explicit PlayersList(QObject *parent = nullptr);
 
-    const QVector<Player> & getPlayers() const;
-    Q_INVOKABLE QVariantList getPlayer(const int & index) const;
+    Q_INVOKABLE QVariantList getPlayer(const int index) const;
     Q_INVOKABLE QVariantList getPlayerCompetitionsInfo(int player, int index) const;
-    Q_INVOKABLE int amoutOfCompetitions(int index) const;
+    Q_INVOKABLE int amoutOfPlayerCompetitions(int index) const;
+
     Q_INVOKABLE void saveData();
-    Q_INVOKABLE void addCompetitionToPlayer(int playerIndex, int competitionIndex, unsigned int moneyPaidIn, int moneyWon);
+    Q_INVOKABLE void addCompetitionToPlayer(int playerIndex, const int& competitionIndex, const unsigned int& moneyPaidIn,
+                                            const int& moneyWon);
 
-    bool setPlayerAt(int index, const Player &player);
-
-    unsigned int getPlayersMoneyPaidInCompetition(int & competitionIndex) const;
+    const QVector<Player>& getPlayers() const;
+    bool setPlayerAt(int index, const Player& player);
+    unsigned int getPlayersMoneyPaidInCompetition(int& competitionIndex) const;
 
 signals:
     void prePlayerAppended();
@@ -33,7 +34,7 @@ signals:
     void prePlayerRemoved(int index);
     void postPlayerRemoved();
 
-    void playerChanged(const int &index, const int &role);
+    void playerChanged(const int& index, const int& role);
 
     Q_SIGNAL void dataSaved() const;
     Q_SIGNAL void dataNotSaved() const;

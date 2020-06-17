@@ -15,14 +15,14 @@ public:
     explicit CompetitionsList(const PlayersList & pL, QObject *parent = nullptr);
 
     Q_INVOKABLE QVariantList getCompetition(int index) const;
-    Q_INVOKABLE void appendCompetition(QDateTime date = QDateTime(), unsigned int prizePool = 0, unsigned int jackpot = 0);
-    Q_INVOKABLE int getCompetitionsAmount() const;
     Q_INVOKABLE QDateTime getCompetitionDate(int index) const;
+    Q_INVOKABLE int getCompetitionsAmount() const;
+
+    Q_INVOKABLE void appendCompetition(QDateTime date = QDateTime(), unsigned int prizePool = 0, unsigned int jackpot = 0);
     Q_INVOKABLE void addMoneyToCompetition(int competitionIndex, unsigned int moneyPaidIn);
 
-    QVector<Competition> getCompetitions() const;
-
-    bool setCompetitionAt(int index, const Competition &player);
+    const QVector<Competition>& getCompetitions() const;
+    bool setCompetitionAt(int index, const Competition &competition);
 
 signals:
     void preCompetitionAppended();
@@ -30,8 +30,6 @@ signals:
 
     void preCompetitionRemoved(int index);
     void postCompetitionRemoved();
-
-    void competitionChanged(const int &index, const int &role);
 
 private:
     QVector<Competition> competitions;

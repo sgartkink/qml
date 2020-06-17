@@ -4,31 +4,6 @@
 #include <QtDebug>
 PlayersList::PlayersList(QObject *parent) : QObject(parent)
 {
-//    CompetitionsParticipatedInfo cPI { 0, 2000, 5000 };
-//    CompetitionsParticipatedInfo cPI2 { 1, 3000, 50 };
-//    QVector<CompetitionsParticipatedInfo> vectorOfCompetitions { cPI/*, cPI2*/ };
-//    unsigned int moneyPaidIn = 0;
-//    int moneyWon = 0;
-//    for (auto it = vectorOfCompetitions.begin(); it != vectorOfCompetitions.end(); ++it)
-//    {
-//        moneyPaidIn += (*it).moneyPaidIn;
-//        moneyWon += (*it).moneyWon;
-//    }
-//    players.append({ "test", moneyPaidIn, moneyWon, 0, vectorOfCompetitions });
-
-//    vectorOfCompetitions.clear();
-//    moneyPaidIn = 0;
-//    moneyWon = 0;
-//    cPI = { 0, 1000, 4000 };
-//    cPI2 = { 1, 4000, 2000 };
-//    vectorOfCompetitions = { cPI, cPI2 };
-//    for (auto it = vectorOfCompetitions.begin(); it != vectorOfCompetitions.end(); ++it)
-//    {
-//        moneyPaidIn += (*it).moneyPaidIn;
-//        moneyWon += (*it).moneyWon;
-//    }
-//    players.append({ "test2", moneyPaidIn, moneyWon, 1, vectorOfCompetitions });
-
     writeReadPlayersData = new WriteReadPlayersData();
     players = writeReadPlayersData->readFromFile();
 
@@ -50,12 +25,7 @@ PlayersList::PlayersList(QObject *parent) : QObject(parent)
     }
 }
 
-const QVector<Player> &PlayersList::getPlayers() const
-{
-    return players;
-}
-
-QVariantList PlayersList::getPlayer(const int & index) const
+QVariantList PlayersList::getPlayer(const int index) const
 {
     QVariantList list;
     list << players[index];
@@ -74,7 +44,7 @@ QVariantList PlayersList::getPlayerCompetitionsInfo(int player, int index) const
     return list;
 }
 
-int PlayersList::amoutOfCompetitions(int index) const
+int PlayersList::amoutOfPlayerCompetitions(int index) const
 {
     return players[index].competitionsParticipated.size();
 }
@@ -87,7 +57,8 @@ void PlayersList::saveData()
         emit dataNotSaved();
 }
 
-void PlayersList::addCompetitionToPlayer(int playerIndex, int competitionIndex, unsigned int moneyPaidIn, int moneyWon)
+void PlayersList::addCompetitionToPlayer(int playerIndex, const int& competitionIndex, const unsigned int& moneyPaidIn,
+                                         const int& moneyWon)
 {
     CompetitionsParticipatedInfo cPI { competitionIndex, moneyPaidIn, moneyWon };
     players[playerIndex].competitionsParticipated.append(cPI);
@@ -98,6 +69,11 @@ void PlayersList::addCompetitionToPlayer(int playerIndex, int competitionIndex, 
     emit playerChanged(playerIndex, PlayersModel::MoneyWonRole);
     emit playerChanged(playerIndex, PlayersModel::MoneyPaidInRole);
     emit playerChanged(playerIndex, PlayersModel::FrequencyRole);
+}
+
+const QVector<Player>& PlayersList::getPlayers() const
+{
+    return players;
 }
 
 bool PlayersList::setPlayerAt(int index, const Player &player)
@@ -113,7 +89,7 @@ bool PlayersList::setPlayerAt(int index, const Player &player)
     return true;
 }
 
-unsigned int PlayersList::getPlayersMoneyPaidInCompetition(int &competitionIndex) const
+unsigned int PlayersList::getPlayersMoneyPaidInCompetition(int& competitionIndex) const
 {
     unsigned int money = 0;
     for (int i = 0; i < players.size(); i++)

@@ -5,7 +5,6 @@
 PlayersModel::PlayersModel(QObject *parent)
     : QAbstractListModel(parent), playersList(nullptr)
 {
-
 }
 
 int PlayersModel::rowCount(const QModelIndex &parent) const

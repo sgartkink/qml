@@ -20,17 +20,9 @@ QVariantList CompetitionsList::getCompetition(int index) const
     return list;
 }
 
-void CompetitionsList::appendCompetition(QDateTime date, unsigned int prizePool, unsigned int jackpot)
+QDateTime CompetitionsList::getCompetitionDate(int index) const
 {
-    emit preCompetitionAppended();
-
-    Competition event;
-    event.date = date;
-    event.prizePool = prizePool;
-    event.jackpot = jackpot;
-    competitions.append(event);
-
-    emit postCompetitionAppended();
+    return competitions[index].date;
 }
 
 int CompetitionsList::getCompetitionsAmount() const
@@ -38,31 +30,38 @@ int CompetitionsList::getCompetitionsAmount() const
     return competitions.size();
 }
 
-QDateTime CompetitionsList::getCompetitionDate(int index) const
+void CompetitionsList::appendCompetition(QDateTime date, unsigned int prizePool, unsigned int jackpot)
 {
-    return competitions[index].date;
+    emit preCompetitionAppended();
+
+    Competition competition;
+    competition.date = date;
+    competition.prizePool = prizePool;
+    competition.jackpot = jackpot;
+    competitions.append(competition);
+
+    emit postCompetitionAppended();
 }
 
 void CompetitionsList::addMoneyToCompetition(int competitionIndex, unsigned int moneyPaidIn)
 {
     competitions[competitionIndex].prizePool += moneyPaidIn;
-    emit competitionChanged(competitionIndex, CompetitionsModel::PrizePoolRole);
 }
 
-QVector<Competition> CompetitionsList::getCompetitions() const
+const QVector<Competition> &CompetitionsList::getCompetitions() const
 {
     return competitions;
 }
 
-bool CompetitionsList::setCompetitionAt(int index, const Competition &player)
+bool CompetitionsList::setCompetitionAt(int index, const Competition &competition)
 {
     if (index < 0 || index >= competitions.size())
         return false;
 
-    const Competition & oldEvent = competitions.at(index);
-    if (player == oldEvent)
+    const Competition & oldCompetition = competitions.at(index);
+    if (competition == oldCompetition)
         return false;
 
-    competitions[index] = player;
+    competitions[index] = competition;
     return true;
 }

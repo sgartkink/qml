@@ -33,7 +33,6 @@ struct Player
     }
 
     QVariant getCompetitionsIndexesAsVariant() const;
-
     QVariant getCompetitionsMoneyWonAsVariant() const;
 };
 
