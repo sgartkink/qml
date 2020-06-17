@@ -44,6 +44,11 @@ QVariantList PlayersList::getPlayerCompetitionsInfo(int player, int index) const
     return list;
 }
 
+const QVariant PlayersList::getPlayerCompetitionsIndexes(int player) const
+{
+    return players[player].getCompetitionsIndexesAsVariant();
+}
+
 int PlayersList::amoutOfPlayerCompetitions(int index) const
 {
     return players[index].competitionsParticipated.size();

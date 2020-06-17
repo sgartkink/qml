@@ -122,6 +122,7 @@ Popup {
                 }
 
                 model: playersList.amoutOfPlayerCompetitions(indexChoosenPlayer)
+                readonly property var indexes: playersList.getPlayerCompetitionsIndexes(indexChoosenPlayer)
 
                 Label {
                     anchors.fill: parent
@@ -168,7 +169,7 @@ Popup {
                             id: list_tMoneyPaidIn
                             anchors.centerIn: parent
                             color: "gold"
-                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[1]
+                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, list.indexes[index])[1]
                         }
                     }
 
@@ -183,7 +184,7 @@ Popup {
                             id: list_tMoneyWon
                             anchors.centerIn: parent
                             color: "gold"
-                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[2]
+                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, list.indexes[index])[2]
                         }
                     }
 

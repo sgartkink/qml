@@ -17,6 +17,7 @@ public:
 
     Q_INVOKABLE QVariantList getPlayer(const int index) const;
     Q_INVOKABLE QVariantList getPlayerCompetitionsInfo(int player, int index) const;
+    Q_INVOKABLE const QVariant getPlayerCompetitionsIndexes(int player) const;
     Q_INVOKABLE int amoutOfPlayerCompetitions(int index) const;
 
     Q_INVOKABLE void saveData();
