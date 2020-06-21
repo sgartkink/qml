@@ -50,6 +50,14 @@ bool SortFilterCompetitions::lessThan(const QModelIndex &left, const QModelIndex
     int moneyWonLeft = calcMoneyWon(left);
     int moneyWonRight = calcMoneyWon(right);
 
+    if (moneyWonLeft == moneyWonRight)
+    {
+        QVariant leftData = sourceModel()->data(left, PlayersModel::NameRole);
+        QVariant rightData = sourceModel()->data(right, PlayersModel::NameRole);
+
+        return leftData.toString() < rightData.toString();
+    }
+
     return moneyWonLeft < moneyWonRight;
 }
 
