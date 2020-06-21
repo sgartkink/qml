@@ -14,6 +14,7 @@ Popup {
     onClosed: popupLoader.active = false
 
     onAboutToShow: showAnimation.running = true
+    onAboutToHide: sortFilterCompetition.setShowPlayersWhoIncludeIndex(true)
 
     NumberAnimation {
         id: showAnimation
@@ -22,7 +23,6 @@ Popup {
         to: 1
         duration: 300
         running: false
-        easing.type: Easing.InOutQuad
     }
 
     background: Rectangle {
@@ -105,86 +105,11 @@ Popup {
                 text: qsTr("Add player in this competition")
                 onClicked: {
                     sortFilterCompetition.setShowPlayersWhoIncludeIndex(false)
-                    rectangle.state = "show"
+                    playersMightBeAddedToComp.state = "show"
                 }
             }
 
-            Rectangle {
-                id: rectangle
-                anchors {
-                    top: parent.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-                z: 1
-
-                color: "green"
-                states: [
-                    State {
-                        name: "hide"
-                        PropertyChanges { target: rectangle; anchors.top: parent.bottom; visible: false }
-                    },
-                    State {
-                        name: "show"
-                        PropertyChanges { target: rectangle; anchors.top: parent.top; visible: true }
-                    }
-                ]
-                transitions: Transition {
-                    AnchorAnimation { duration: 200; easing.type: Easing.Linear }
-                }
-                state: "hide"
-
-                GridView {
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                    }
-
-                    width: parent.width
-                    model: sortFilterCompetition
-
-                    delegate: Item {
-                        Rectangle {
-                            implicitWidth: 50
-                            implicitHeight: txt.height*3
-                            color: "black"
-                            border.color: "gold"
-                            Text {
-                                id: txt
-                                text: model.name
-                                anchors.centerIn: parent
-                                color: "gold"
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    popupAddPlayerToCompetition.setProperties(model.name, model.number)
-                                    popupAddPlayerToCompetition.open()
-                                }
-                            }
-                        }
-                    }
-                }
-
-                PopupAddPlayerToCompetition { id: popupAddPlayerToCompetition }
-
-                Button {
-                    id: btnHide
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        bottom: parent.bottom
-                    }
-                    text: "hide"
-                    onClicked: {
-                        sortFilterCompetition.setShowPlayersWhoIncludeIndex(true)
-                        rectangle.state = "hide"
-                    }
-                }
-            }
+            PlayersMightBeAddedToComp { id: playersMightBeAddedToComp }
         }
     }
 }
