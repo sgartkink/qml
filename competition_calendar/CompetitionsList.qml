@@ -10,7 +10,7 @@ Item {
         top: topBarCompetitionsQML.bottom
         left: parent.left
         right: parent.right
-        bottom: btnAddCompetition.top
+        bottom: buttonsRow.top
     }
     property int indexChoosenCompetition: 0
 

@@ -8,6 +8,8 @@
 #include "competition.h"
 #include "../player/playerslist.h"
 
+class WriteReadCompetitionsData;
+
 class CompetitionsList : public QObject
 {
     Q_OBJECT
@@ -18,6 +20,7 @@ public:
     Q_INVOKABLE QDateTime getCompetitionDate(int index) const;
     Q_INVOKABLE int getCompetitionsAmount() const;
 
+    Q_INVOKABLE void saveData();
     Q_INVOKABLE void appendCompetition(QDateTime date = QDateTime(), unsigned int prizePool = 0, unsigned int jackpot = 0);
     Q_INVOKABLE void addMoneyToCompetition(int competitionIndex, unsigned int moneyPaidIn);
 
@@ -31,8 +34,12 @@ signals:
     void preCompetitionRemoved(int index);
     void postCompetitionRemoved();
 
+    Q_SIGNAL void dataSaved() const;
+    Q_SIGNAL void dataNotSaved() const;
+
 private:
     QVector<Competition> competitions;
+    WriteReadCompetitionsData * writeReadCompetitionsData = nullptr;
 };
 
 #endif // EVENTSLIST_H

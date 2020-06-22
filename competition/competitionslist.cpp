@@ -1,13 +1,17 @@
 #include "competitionslist.h"
 #include "competitionsmodel.h"
+#include "writereadcompetitionsdata.h"
 
 CompetitionsList::CompetitionsList(const PlayersList &pL, QObject *parent)
     : QObject(parent)
 {
-    QDateTime time { QDateTime::currentDateTime() };
-    competitions.append({ time, 0, 5000 });
-    QDateTime time2 = time.addDays(2);
-    competitions.append({ time2, 0, 7000 });
+    writeReadCompetitionsData = new WriteReadCompetitionsData();
+    competitions = writeReadCompetitionsData->readFromFile();
+
+//    QDateTime time { QDateTime::currentDateTime() };
+//    competitions.append({ time, 0, 5000 });
+//    QDateTime time2 = time.addDays(2);
+//    competitions.append({ time2, 0, 7000 });
 
     for (int i = 0; i < competitions.size(); i++)
         competitions[i].prizePool = pL.getPlayersMoneyPaidInCompetition(i);
@@ -28,6 +32,14 @@ QDateTime CompetitionsList::getCompetitionDate(int index) const
 int CompetitionsList::getCompetitionsAmount() const
 {
     return competitions.size();
+}
+
+void CompetitionsList::saveData()
+{
+    if (writeReadCompetitionsData->writeToFile(competitions))
+        emit dataSaved();
+    else
+        emit dataNotSaved();
 }
 
 void CompetitionsList::appendCompetition(QDateTime date, unsigned int prizePool, unsigned int jackpot)
