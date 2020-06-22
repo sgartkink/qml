@@ -76,6 +76,12 @@ void PlayersList::addCompetitionToPlayer(int playerIndex, const int& competition
     emit playerChanged(playerIndex, PlayersModel::FrequencyRole);
 }
 
+void PlayersList::changeName(int index, QString name)
+{
+    players[index].name = name;
+    emit playerChanged(index, PlayersModel::NameRole);
+}
+
 const QVector<Player>& PlayersList::getPlayers() const
 {
     return players;

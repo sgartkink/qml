@@ -41,11 +41,21 @@ Popup {
                 right: parent.right
             }
             height: 30
-            z: 1
-            Text {
-                id: popup_TName
-                text: popup.visible ? "NAME: " + playersList.getPlayer(indexChoosenPlayer)[0] : ""
-                anchors.centerIn: parent
+
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                z: 1
+                Text {
+                    id: popup_TName
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "NAME: "
+                }
+                TextField {
+                    id: popup_TfName
+                    height: 30
+                    text: popup.visible ? playersList.getPlayer(indexChoosenPlayer)[0] : ""
+                }
             }
         }
 
@@ -60,7 +70,7 @@ Popup {
             z: 1
             Text {
                 id: popup_TMoneyPaidIn
-                text: popup.visible ? "MONEY PAID IN: " + playersList.getPlayer(indexChoosenPlayer)[1] : ""
+                text: "MONEY PAID IN: " + playersList.getPlayer(indexChoosenPlayer)[1]
                 anchors.centerIn: parent
             }
         }
@@ -76,7 +86,7 @@ Popup {
             z: 1
             Text {
                 id: popup_TMoneyWon
-                text: popup.visible ? "MONEY WON: " + playersList.getPlayer(indexChoosenPlayer)[2] : ""
+                text: "MONEY WON: " + playersList.getPlayer(indexChoosenPlayer)[2]
                 anchors.centerIn: parent
             }
         }
@@ -92,12 +102,9 @@ Popup {
             z: 1
             Text {
                 id: popup_TFrequency
-                text: popup.visible ?
-                          "FREQUENCY: " + playersList.getPlayer(indexChoosenPlayer)[3] + "/"
-                          + competitionsList.getCompetitionsAmount()
-                          + " ("
-                          + parseInt(playersList.getPlayer(indexChoosenPlayer)[3]/competitionsList.getCompetitionsAmount()*100)
-                          + "%)" : ""
+                text: "FREQUENCY: " + playersList.getPlayer(indexChoosenPlayer)[3] + "/"
+                + competitionsList.getCompetitionsAmount()
+                + " (" + parseInt(playersList.getPlayer(indexChoosenPlayer)[3]/competitionsList.getCompetitionsAmount()*100) + "%)"
                 anchors.centerIn: parent
             }
         }
@@ -107,91 +114,70 @@ Popup {
                 top: popup_RFrequency.bottom
                 left: parent.left
                 right: parent.right
-                bottom: parent.bottom
+                bottom: buttonsRectangle.top
             }
 
             TopBarPlayerInfo { id: topBarPlayerInfo }
 
-            ListView {
-                id: list
-                anchors {
-                    top: topBarPlayerInfo.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
+            ListViewPlayerInfo {}
+        }
+
+        Rectangle {
+            id: buttonsRectangle
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+                right: parent.right
+            }
+            height: 30
+            color: "white"
+
+            Row {
+                spacing: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Button {
+                    id: btnRemovePlayer
+                    text: qsTr("Remove player")
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    onClicked: {
+                        popup.close()
+                        playersList.removePlayer(indexChoosenPlayer)
+                    }
+
+                    contentItem: Text {
+                        text: btnRemovePlayer.text
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        color: "gold"
+                    }
+
+                    background: Rectangle {
+                        color: "black"
+                        border.color: "gold"
+                        radius: 10
+                    }
                 }
 
-                model: playersList.amoutOfPlayerCompetitions(indexChoosenPlayer)
-                readonly property var indexes: playersList.getPlayerCompetitionsIndexes(indexChoosenPlayer)
+                Button {
+                    id: btnChangeName
+                    text: qsTr("Change name")
+                    anchors.verticalCenter: parent.verticalCenter
 
-                Label {
-                    anchors.fill: parent
-                    horizontalAlignment: Qt.AlignHCenter
-                    verticalAlignment: Qt.AlignVCenter
-                    visible: parent.count == 0
-                    text: qsTr("Nothing to show yet!")
-                    font.bold: true
-                }
+                    onClicked: playersList.changeName(indexChoosenPlayer, popup_TfName.text)
 
-                delegate: Rectangle {
-                    width: parent.width
-                    height: 30
-                    color: mouseArea.containsMouse ? "green" : "black"
-
-                    Rectangle {
-                        id: list_rDate
-                        height: parent.height
-                        width: parent.width/3
-                        color: parent.color
-
-                        Text {
-                            id: list_tDate
-                            anchors.centerIn: parent
-                            color: "gold"
-                            readonly property date competitionDate: competitionsList.
-                            getCompetitionDate(playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, index)[0])
-
-                            text: competitionDate.getDate() + "/" + (competitionDate.getMonth()+1 < 10 ? "0" : "")
-                                  + (competitionDate.getMonth()+1) + "/" +  competitionDate.getFullYear()
-                                  + " " + competitionDate.getHours() + ":"
-                                  + (competitionDate.getMinutes() < 10 ? "0" : "") + competitionDate.getMinutes()
-                        }
+                    contentItem: Text {
+                        text: btnChangeName.text
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        color: "gold"
                     }
 
-                    Rectangle {
-                        id: list_rMoneyPaidIn
-                        height: parent.height
-                        width: parent.width/3
-                        color: parent.color
-                        anchors.left: list_rDate.right
-
-                        Text {
-                            id: list_tMoneyPaidIn
-                            anchors.centerIn: parent
-                            color: "gold"
-                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, list.indexes[index])[1]
-                        }
-                    }
-
-                    Rectangle {
-                        id: list_rMoneyWon
-                        height: parent.height
-                        width: parent.width/3
-                        color: parent.color
-                        anchors.left: list_rMoneyPaidIn.right
-
-                        Text {
-                            id: list_tMoneyWon
-                            anchors.centerIn: parent
-                            color: "gold"
-                            text: playersList.getPlayerCompetitionsInfo(indexChoosenPlayer, list.indexes[index])[2]
-                        }
-                    }
-
-                    MouseArea {
-                        id: mouseArea
-                        anchors.fill: parent
-                        hoverEnabled: true
+                    background: Rectangle {
+                        color: "black"
+                        border.color: "gold"
+                        radius: 10
                     }
                 }
             }

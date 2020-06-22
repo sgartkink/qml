@@ -17,5 +17,6 @@
         <file>popups/PopupAddPlayerToCompetition.qml</file>
         <file>competition_calendar/ListViewCompetitionInfo.qml</file>
         <file>competition_calendar/PlayersMightBeAddedToComp.qml</file>
+        <file>leaderboard/ListViewPlayerInfo.qml</file>
     </qresource>
 </RCC>

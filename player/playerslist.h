@@ -23,6 +23,7 @@ public:
     Q_INVOKABLE void saveData();
     Q_INVOKABLE void addCompetitionToPlayer(int playerIndex, const int& competitionIndex, const unsigned int& moneyPaidIn,
                                             const int& moneyWon);
+    Q_INVOKABLE void changeName(int index, QString name);
 
     const QVector<Player>& getPlayers() const;
     bool setPlayerAt(int index, const Player& player);
