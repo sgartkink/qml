@@ -62,7 +62,7 @@ Popup {
             height: 30
             Text {
                 id: popup_TPrizePool
-                text: popup.visible ? "PRIZE POOL: " + competitionsList.getCompetition(indexChoosenCompetition)[1] : ""
+                text: "PRIZE POOL: " + competitionsList.getCompetition(indexChoosenCompetition)[1]
                 anchors.centerIn: parent
             }
         }
@@ -76,7 +76,7 @@ Popup {
             height: 30
             Text {
                 id: popup_TJackpot
-                text: popup.visible ? "JACKPOT: " + competitionsList.getCompetition(indexChoosenCompetition)[2] : ""
+                text: "JACKPOT: " + competitionsList.getCompetition(indexChoosenCompetition)[2]
                 anchors.centerIn: parent
             }
         }
@@ -100,12 +100,37 @@ Popup {
                 anchors {
                     left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
+                    bottom: btnRemoveCompetition.top
                 }
                 text: qsTr("Add player in this competition")
+
+                background: Rectangle {
+                    border.color: "black"
+                }
+
                 onClicked: {
                     sortFilterCompetition.setShowPlayersWhoIncludeIndex(false)
                     playersMightBeAddedToComp.state = "show"
+                }
+            }
+
+            Button {
+                id: btnRemoveCompetition
+                height: 30
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+                text: qsTr("Remove competition")
+
+                background: Rectangle {
+                    border.color: "black"
+                }
+
+                onClicked: {
+                    popup.close()
+                    competitionsList.removeCompetition(indexChoosenCompetition)
                 }
             }
 

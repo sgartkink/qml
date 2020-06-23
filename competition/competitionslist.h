@@ -23,6 +23,7 @@ public:
     Q_INVOKABLE void saveData();
     Q_INVOKABLE void appendCompetition(QDateTime date = QDateTime(), unsigned int prizePool = 0, unsigned int jackpot = 0);
     Q_INVOKABLE void addMoneyToCompetition(int competitionIndex, unsigned int moneyPaidIn);
+    Q_INVOKABLE void removeCompetition(int index);
 
     const QVector<Competition>& getCompetitions() const;
     bool setCompetitionAt(int index, const Competition &competition);

@@ -60,6 +60,15 @@ void CompetitionsList::addMoneyToCompetition(int competitionIndex, unsigned int 
     competitions[competitionIndex].prizePool += moneyPaidIn;
 }
 
+void CompetitionsList::removeCompetition(int index)
+{
+    emit preCompetitionRemoved(index);
+
+    competitions.removeAt(index);
+
+    emit postCompetitionRemoved();
+}
+
 const QVector<Competition> &CompetitionsList::getCompetitions() const
 {
     return competitions;

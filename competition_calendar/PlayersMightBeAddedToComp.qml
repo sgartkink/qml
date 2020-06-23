@@ -71,6 +71,7 @@ Rectangle {
             bottom: parent.bottom
         }
         text: "hide"
+        height: 30
         onClicked: {
             sortFilterCompetition.setShowPlayersWhoIncludeIndex(true)
             playersMightBeAddedToComp.state = "hide"

@@ -11,6 +11,12 @@ ListView {
 
     model: sortFilterCompetition
 
+    add: Transition {
+        PropertyAction { property: "transformOrigin"; value: Item.TopLeft }
+        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
+        NumberAnimation { property: "scale"; from: 0; to: 1.0; duration: 200 }
+    }
+
     delegate: Rectangle {
         width: parent.width
         height: 30

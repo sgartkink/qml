@@ -37,11 +37,8 @@ QVariantList PlayersList::getPlayerCompetitionsInfo(int player, int index) const
     QVariantList list;
     for (auto it = players[player].competitionsParticipated.begin(); it != players[player].competitionsParticipated.end(); ++it)
         if ((*it).index == index)
-        {
-            list << (*it);
-            break;
-        }
-    return list;
+            return list << (*it);
+    return list << 0 << 0 << 0;
 }
 
 const QVariant PlayersList::getPlayerCompetitionsIndexes(int player) const
